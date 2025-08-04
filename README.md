@@ -113,7 +113,7 @@ The frontend will be available at `http://localhost:3000`
 
 ### Backend (.env)
 ```bash
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/redrecon
+MONGO_URI=mongodb+srv://<USERNAME>:<PASSWORD>@<CLUSTER>.mongodb.net/redrecon?retryWrites=true&w=majority
 JWT_SECRET_KEY=your-super-secure-jwt-secret-key
 ```
 
@@ -225,7 +225,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🆘 Support
 
 For support, please open an issue on GitHub or contact the development team.
-
----
-
-**Built with ❤️ for the cybersecurity community**
