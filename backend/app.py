@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import auth, scan, payload, logs, cve, pcap
+from db import is_mongodb_connected
 import os
+import sys
+from datetime import datetime
 from dotenv import load_dotenv
 
-# Force redeploy - updated 2025-08-05 at 6:25 PM
+# Force redeploy - updated 2025-08-05 at 6:40 PM
 # Load environment variables
 load_dotenv()
 
@@ -15,7 +18,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS Configuration - UPDATED to include the correct Vercel URL
 # CORS Configuration - TEMPORARY: Allow all origins for testing
 app.add_middleware(
     CORSMiddleware,
@@ -42,6 +44,27 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "message": "API is operational"}
+
+# DEBUG ENDPOINT - Remove after fixing MongoDB
+@app.get("/debug")
+async def debug_info():
+    """Debug endpoint to check what's actually running"""
+    mongo_uri = os.getenv("MONGO_URI")
+    jwt_secret = os.getenv("JWT_SECRET_KEY")
+    
+    return {
+        "mongodb_connected": is_mongodb_connected(),
+        "mongo_uri_present": bool(mongo_uri),
+        "mongo_uri_starts_with": mongo_uri[:50] if mongo_uri else None,
+        "jwt_secret_present": bool(jwt_secret),
+        "db_module_loaded": "db" in sys.modules,
+        "timestamp": datetime.utcnow().isoformat(),
+        "environment_vars": {
+            "MONGO_URI": "SET" if mongo_uri else "MISSING",
+            "JWT_SECRET_KEY": "SET" if jwt_secret else "MISSING",
+            "PYTHONPATH": os.getenv("PYTHONPATH", "NOT_SET")
+        }
+    }
 
 # Local dev server entrypoint (ignored on Azure)
 if __name__ == "__main__":
