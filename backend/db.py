@@ -3,6 +3,7 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 import os
 from dotenv import load_dotenv
 
+# Force redeploy - updated 2025-08-05 at 6:25 PM
 # Load environment variables
 load_dotenv()
 
