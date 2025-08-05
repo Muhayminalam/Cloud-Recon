@@ -12,7 +12,7 @@ class UserLogin(BaseModel):
     password: str
 
 class User(BaseModel):
-    id: str = Field(alias="_id")
+    _id: str
     email: EmailStr
     created_at: datetime
 
@@ -56,7 +56,7 @@ class PayloadResult(BaseModel):
     timestamp: datetime
 
 class LogEntry(BaseModel):
-    id: str = Field(alias="_id")
+    _id: str
     user_id: str
     tool: str
     input_data: str
@@ -67,7 +67,7 @@ class LogEntry(BaseModel):
         populate_by_name = True
 
 class CVE(BaseModel):
-    id: str = Field(alias="_id")
+    _id: str
     description: str
     severity: str
     tags: List[str]
