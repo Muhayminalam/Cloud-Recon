@@ -2,9 +2,8 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 import os
 from dotenv import load_dotenv
-import ssl
 
-# Updated: Fixed MongoDB SSL connection for Azure deployment
+# Load environment variables
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -17,7 +16,7 @@ logs_collection = None
 cves_collection = None
 
 def connect_to_mongodb():
-    """Attempt to connect to MongoDB Atlas with proper SSL handling"""
+    """Attempt to connect to MongoDB Atlas optimized for Azure"""
     global client, db, users_collection, logs_collection, cves_collection
     
     if not MONGO_URI:
@@ -25,29 +24,34 @@ def connect_to_mongodb():
         return False
 
     try:
-        # MongoDB Atlas connection with SSL configuration for Azure
+        print(f"🔄 Connecting to MongoDB Atlas...")
+        print(f"📍 Connection string starts with: {MONGO_URI[:50]}...")
+        
+        # Simplified connection for Azure - let MongoDB handle SSL automatically
         client = MongoClient(
             MONGO_URI,
-            serverSelectionTimeoutMS=10000,  # 10 second timeout
-            connectTimeoutMS=10000,
-            socketTimeoutMS=10000,
-            ssl=True,
-            ssl_cert_reqs=ssl.CERT_NONE,  # Disable SSL certificate verification for Azure
-            ssl_match_hostname=False,
-            tlsAllowInvalidCertificates=True
+            serverSelectionTimeoutMS=30000,  # Increased timeout for Azure
+            connectTimeoutMS=20000,
+            socketTimeoutMS=20000,
+            retryWrites=True,
+            w='majority'
         )
         
-        # Test the connection with a shorter timeout
+        # Test the connection
         client.admin.command('ping')
         print("✅ Successfully connected to MongoDB Atlas!")
         
-        # Get database
-        db = client.RedRecon
+        # Get database - using 'redrecon' (lowercase) to match connection string
+        db = client.redrecon
         
         # Collections
         users_collection = db.users
         logs_collection = db.logs
         cves_collection = db.cves
+        
+        # Print database info for debugging
+        print(f"📊 Connected to database: {db.name}")
+        print(f"📋 Available collections will be created on first use")
         
         return True
         
@@ -119,3 +123,14 @@ def get_cves_collection():
 def is_mongodb_connected():
     """Check if MongoDB is currently connected"""
     return mongodb_connected
+
+def test_connection():
+    """Test MongoDB connection and return status"""
+    try:
+        if client:
+            client.admin.command('ping')
+            return True, "Connection successful"
+        else:
+            return False, "No client connection"
+    except Exception as e:
+        return False, f"Connection test failed: {e}"
