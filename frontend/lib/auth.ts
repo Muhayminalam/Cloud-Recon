@@ -20,9 +20,9 @@ export const auth = {
       const response = await apiClient.login(email, password);
       const { access_token, token_type, user } = response.data;
       
-      // Store token and user data in cookies
-      Cookies.set('token', access_token, { expires: 1 }); // 1 day
-      Cookies.set('user', JSON.stringify(user), { expires: 1 });
+      // Store token and user data in cookies with longer expiration
+      Cookies.set('token', access_token, { expires: 7, secure: true, sameSite: 'strict' }); // 7 days
+      Cookies.set('user', JSON.stringify(user), { expires: 7, secure: true, sameSite: 'strict' });
       
       return response.data;
     } catch (error: any) {
@@ -44,6 +44,8 @@ export const auth = {
   logout: () => {
     Cookies.remove('token');
     Cookies.remove('user');
+    // Clear any other auth-related data
+    localStorage.removeItem('lastActivity');
     window.location.href = '/login';
   },
 
@@ -64,7 +66,8 @@ export const auth = {
   // Check if user is authenticated
   isAuthenticated: (): boolean => {
     const token = Cookies.get('token');
-    return !!token;
+    const user = Cookies.get('user');
+    return !!(token && user);
   },
 
   // Get token
@@ -72,26 +75,74 @@ export const auth = {
     return Cookies.get('token') || null;
   },
 
-  // Verify token with backend
+  // Verify token with backend - with better error handling
   verifyToken: async (): Promise<User | null> => {
     try {
       if (!auth.isAuthenticated()) {
         return null;
       }
       
+      // Record activity
+      localStorage.setItem('lastActivity', Date.now().toString());
+      
       const response = await apiClient.getProfile();
       const user = response.data;
       
       // Update user cookie with fresh data
-      Cookies.set('user', JSON.stringify(user), { expires: 1 });
+      Cookies.set('user', JSON.stringify(user), { expires: 7, secure: true, sameSite: 'strict' });
       
       return user;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Token verification failed:', error);
-      auth.logout();
+      
+      // Only logout if it's a 401 (unauthorized) error
+      if (error.response?.status === 401) {
+        auth.logout();
+      }
+      
+      // For other errors (network issues, etc.), return cached user if available
+      const cachedUser = auth.getCurrentUser();
+      if (cachedUser && error.response?.status !== 401) {
+        console.warn('Using cached user due to network error');
+        return cachedUser;
+      }
+      
       return null;
     }
   },
+
+  // Check if token needs refresh (optional - for future use)
+  shouldRefreshToken: (): boolean => {
+    const lastActivity = localStorage.getItem('lastActivity');
+    if (!lastActivity) return true;
+    
+    const timeSinceActivity = Date.now() - parseInt(lastActivity);
+    const thirtyMinutes = 30 * 60 * 1000;
+    
+    return timeSinceActivity > thirtyMinutes;
+  },
+
+  // Update last activity timestamp
+  updateActivity: () => {
+    localStorage.setItem('lastActivity', Date.now().toString());
+  },
+
+  // Initialize auth state (call this on app startup)
+  initializeAuth: async (): Promise<User | null> => {
+    if (!auth.isAuthenticated()) {
+      return null;
+    }
+
+    // Try to get cached user first
+    const cachedUser = auth.getCurrentUser();
+    
+    // Only verify with backend if we should refresh
+    if (auth.shouldRefreshToken()) {
+      return await auth.verifyToken();
+    }
+    
+    return cachedUser;
+  }
 };
 
 export default auth;

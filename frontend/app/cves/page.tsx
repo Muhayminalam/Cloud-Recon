@@ -14,7 +14,10 @@ import {
   AlertTriangle,
   Shield,
   Calendar,
-  Tag
+  Tag,
+  Bug,
+  Globe,
+  Eye
 } from 'lucide-react';
 
 interface CVE {
@@ -81,6 +84,11 @@ export default function CVEDatabase() {
     }
   };
 
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    fetchCVEs();
+  };
+
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case 'critical':
@@ -134,7 +142,10 @@ export default function CVEDatabase() {
           <Sidebar />
           <div className="md:pl-64 flex flex-col flex-1">
             <main className="flex-1 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-red-600 border-t-transparent mb-4 mx-auto"></div>
+                <p className="text-gray-400">Loading CVE database...</p>
+              </div>
             </main>
           </div>
         </div>
@@ -149,83 +160,131 @@ export default function CVEDatabase() {
         <Sidebar />
         <div className="md:pl-64 flex flex-col flex-1">
           <main className="flex-1">
-            <div className="py-6">
+            <div className="py-8">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 {/* Header */}
-                <div className="mb-8">
-                  <div className="flex items-center space-x-3">
-                    <Database className="h-8 w-8 text-red-500" />
-                    <h1 className="text-2xl font-semibold text-white">CVE Database</h1>
+                <div className="mb-8 text-center">
+                  <div className="flex items-center justify-center space-x-3 mb-4">
+                    <Database 
+                      className="h-8 w-8" 
+                      style={{ color: '#dc2626', filter: 'drop-shadow(0 0 10px #dc2626)' }} 
+                    />
+                    <h1 
+                      className="text-3xl font-bold" 
+                      style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}
+                    >
+                      CVE Database
+                    </h1>
                   </div>
-                  <p className="mt-1 text-sm text-gray-400">
-                    Browse and search the latest vulnerability information and exploits
+                  <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+                    Access the most comprehensive database of Common Vulnerabilities and Exposures (CVEs) for penetration testing, 
+                    security research, and vulnerability assessment activities.
                   </p>
                 </div>
 
-                {/* Search and Filters */}
-                <div className="bg-gray-800 shadow rounded-lg p-6 mb-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                    {/* Search */}
-                    <div className="lg:col-span-6">
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Search className="h-5 w-5 text-gray-400" />
+                {/* What is CVE Database Section */}
+                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border-2 border-blue-500/30 rounded-xl p-8">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <Bug className="h-6 w-6 text-blue-400" />
+                    <h2 className="text-xl font-bold text-blue-300">What is the CVE Database?</h2>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Left Column */}
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
+                          <span className="mr-2">🔍</span>
+                          CVE Research & Discovery:
+                        </h3>
+                        <div className="space-y-2 text-sm text-blue-100">
+                          <p>• CVE (Common Vulnerabilities and Exposures) is a standardized database that provides unique identifiers for publicly known cybersecurity vulnerabilities.</p>
+                          <p>• Our database aggregates the latest CVEs with severity ratings, detailed descriptions, and actionable information for security professionals.</p>
+                          <p>• Search through thousands of vulnerabilities by keywords, severity levels, affected technologies, and publication dates.</p>
+                          <p>• Each CVE entry includes comprehensive details about the vulnerability, impact assessment, and links to official references.</p>
                         </div>
-                        <input
-                          type="text"
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          onKeyPress={handleKeyPress}
-                          className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
-                          placeholder="Search CVEs by description or tags..."
-                        />
                       </div>
                     </div>
-
-                    {/* Search Button */}
-                    <div className="lg:col-span-2">
-                      <button
-                        onClick={handleSearch}
-                        className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                      >
-                        <Search className="h-4 w-4 mr-2" />
-                        Search
-                      </button>
-                    </div>
-
-                    {/* Severity Filter */}
-                    <div className="lg:col-span-2">
-                      <div className="relative">
-                        <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <select
-                          value={severityFilter}
-                          onChange={(e) => setSeverityFilter(e.target.value)}
-                          className="appearance-none bg-gray-700 border border-gray-600 text-white py-2 pl-10 pr-8 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 w-full"
-                        >
-                          <option value="all">All Severities</option>
-                          <option value="critical">Critical</option>
-                          <option value="high">High</option>
-                          <option value="medium">Medium</option>
-                          <option value="low">Low</option>
-                        </select>
+                    
+                    {/* Right Column */}
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
+                          <span className="mr-2">⚡</span>
+                          Professional Applications:
+                        </h3>
+                        <div className="space-y-2 text-sm text-blue-100">
+                          <p>• Essential tool for penetration testers to identify known vulnerabilities in target systems and applications.</p>
+                          <p>• Security researchers use CVE data to understand attack vectors and develop defensive strategies.</p>
+                          <p>• Vulnerability assessment teams leverage CVE information to prioritize patching and remediation efforts.</p>
+                          <p>• Compliance officers reference CVEs for regulatory reporting and risk management documentation.</p>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Tag Filter */}
-                    <div className="lg:col-span-2">
-                      <div className="relative">
-                        <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <select
-                          value={selectedTag}
-                          onChange={(e) => setSelectedTag(e.target.value)}
-                          className="appearance-none bg-gray-700 border border-gray-600 text-white py-2 pl-10 pr-8 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 w-full"
-                        >
-                          <option value="">All Tags</option>
-                          {allTags.map(tag => (
-                            <option key={tag} value={tag}>{tag}</option>
-                          ))}
-                        </select>
+                  </div>
+                  
+                  <div className="mt-6 pt-6 border-t border-blue-500/20">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      <div>
+                        <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
+                          <span className="mr-2">🛡️</span>
+                          Severity Classifications:
+                        </h3>
+                        <div className="space-y-2 text-sm text-blue-100">
+                          <p>• <strong>Critical:</strong> Vulnerabilities that allow immediate system compromise with minimal user interaction.</p>
+                          <p>• <strong>High:</strong> Serious security flaws that could lead to significant data breaches or system access.</p>
+                          <p>• <strong>Medium:</strong> Moderate vulnerabilities that require specific conditions to exploit effectively.</p>
+                          <p>• <strong>Low:</strong> Minor security issues with limited impact or requiring complex attack scenarios.</p>
+                        </div>
                       </div>
+                      
+                      <div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Statistics */}
+                <div 
+                  className="bg-gray-800 shadow-xl rounded-xl p-6 mb-6" 
+                  style={{ marginTop: '2rem' }}
+                >
+                  {/* Horizontal Statistics with Red Theme */}
+                  <div 
+                    className="flex flex-wrap items-center justify-center mb-6" 
+                    style={{ gap: '3rem', marginTop: '1rem' }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Database className="h-6 w-6" style={{ color: '#ef4444' }} />
+                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
+                        Total CVEs: {filteredCVEs.length}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <AlertTriangle className="h-6 w-6" style={{ color: '#ef4444' }} />
+                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
+                        Critical: {filteredCVEs.filter(cve => cve.severity.toLowerCase() === 'critical').length}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Shield className="h-6 w-6" style={{ color: '#ef4444' }} />
+                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
+                        High: {filteredCVEs.filter(cve => cve.severity.toLowerCase() === 'high').length}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Eye className="h-6 w-6" style={{ color: '#ef4444' }} />
+                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
+                        Recent: {filteredCVEs.filter(cve => {
+                          const date = new Date(cve.published_date);
+                          const thirtyDaysAgo = new Date();
+                          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                          return date >= thirtyDaysAgo;
+                        }).length}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -241,108 +300,73 @@ export default function CVEDatabase() {
                   </div>
                 )}
 
-                {/* Statistics */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                  <div className="bg-gray-800 rounded-lg p-4">
-                    <div className="flex items-center">
-                      <Database className="h-8 w-8 text-gray-400" />
-                      <div className="ml-4">
-                        <p className="text-2xl font-bold text-white">{filteredCVEs.length}</p>
-                        <p className="text-gray-400 text-sm">Total CVEs</p>
-                      </div>
-                    </div>
+                {/* CVE List */}
+                <div className="bg-black shadow-xl rounded-xl p-6 mt-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg font-semibold text-white">CVE Entries</h3>
                   </div>
                   
-                  {['critical', 'high', 'medium', 'low'].map(severity => (
-                    <div key={severity} className="bg-gray-800 rounded-lg p-4">
-                      <div className="flex items-center">
-                        <div className={`p-2 rounded-lg ${getSeverityColor(severity)}`}>
-                          {getSeverityIcon(severity)}
-                        </div>
-                        <div className="ml-4">
-                          <p className="text-2xl font-bold text-white">
-                            {filteredCVEs.filter(cve => cve.severity.toLowerCase() === severity).length}
-                          </p>
-                          <p className="text-gray-400 text-sm capitalize">{severity}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CVE List */}
-                <div className="space-y-4">
                   {filteredCVEs.length === 0 ? (
-                    <div className="bg-gray-800 shadow rounded-lg p-8 text-center">
-                      <Database className="mx-auto h-12 w-12 text-gray-400" />
-                      <h3 className="mt-2 text-sm font-medium text-white">No CVEs found</h3>
-                      <p className="mt-1 text-sm text-gray-400">
-                        {searchTerm || severityFilter !== 'all' || selectedTag
-                          ? 'Try adjusting your search or filter criteria.'
-                          : 'No CVE data available at the moment.'
-                        }
+                    <div className="text-center py-12">
+                      <Database className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                      <h3 className="text-lg font-medium text-white mb-2">No CVEs found</h3>
+                      <p className="text-gray-400">
+                        No example CVE data available at the moment.
                       </p>
                     </div>
                   ) : (
-                    filteredCVEs.map((cve) => (
-                      <div key={cve.id} className="bg-gray-800 shadow rounded-lg p-6">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-3 mb-3">
-                              <h3 className="text-lg font-medium text-white">{cve.id}</h3>
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getSeverityColor(cve.severity)}`}>
-                                {getSeverityIcon(cve.severity)}
-                                <span className="ml-1">{cve.severity.toUpperCase()}</span>
-                              </span>
-                              <div className="flex items-center text-sm text-gray-400">
-                                <Calendar className="h-4 w-4 mr-1" />
-                                {formatDate(cve.published_date)}
+                    <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                      {filteredCVEs.map((cve) => (
+                        <div 
+                          key={cve.id} 
+                          className="bg-black hover:bg-white rounded-lg p-4 border border-gray-700 hover:border-black cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl group"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-3">
+                                <h3 className="text-lg font-medium text-white group-hover:text-black">{cve.id}</h3>
+                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getSeverityColor(cve.severity)}`}>
+                                  {getSeverityIcon(cve.severity)}
+                                  <span className="ml-1">{cve.severity.toUpperCase()}</span>
+                                </span>
+                                <div className="flex items-center text-sm text-gray-400 group-hover:text-gray-600">
+                                  <Calendar className="h-4 w-4 mr-1" />
+                                  {formatDate(cve.published_date)}
+                                </div>
+                              </div>
+                              
+                              <p className="text-gray-300 group-hover:text-gray-700 mb-4 leading-relaxed">{cve.description}</p>
+                              
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                {cve.tags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300 group-hover:bg-gray-200 group-hover:text-gray-700"
+                                  >
+                                    <Tag className="h-3 w-3 mr-1" />
+                                    {tag}
+                                  </span>
+                                ))}
                               </div>
                             </div>
                             
-                            <p className="text-gray-300 mb-4">{cve.description}</p>
-                            
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {cve.tags.map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300"
-                                >
-                                  <Tag className="h-3 w-3 mr-1" />
-                                  {tag}
-                                </span>
-                              ))}
+                            <div className="ml-4">
+                              <a
+                                href={cve.reference}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-red-600 hover:text-white hover:border-red-600 group-hover:bg-gray-200 group-hover:text-gray-800 group-hover:border-gray-400 group-hover:hover:bg-red-600 group-hover:hover:text-white group-hover:hover:border-red-600 transition-all duration-200"
+                              >
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                View Details
+                              </a>
                             </div>
                           </div>
-                          
-                          <div className="ml-4">
-                            <a
-                              href={cve.reference}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
-                            >
-                              <ExternalLink className="h-4 w-4 mr-2" />
-                              View Details
-                            </a>
-                          </div>
                         </div>
-                      </div>
-                    ))
+                      ))}
+                    </div>
                   )}
                 </div>
-
-                {/* Load More */}
-                {filteredCVEs.length > 0 && (
-                  <div className="mt-8 text-center">
-                    <button
-                      onClick={fetchCVEs}
-                      className="inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                    >
-                      Load More CVEs
-                    </button>
-                  </div>
-                )}
               </div>
             </div>
           </main>
