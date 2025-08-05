@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 import ssl
 
+# Updated: Fixed MongoDB SSL connection for Azure deployment
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
