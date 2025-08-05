@@ -12,6 +12,9 @@ A comprehensive penetration testing and security assessment platform built with 
   - Frontend: Vercel
   - Backend: Azure App Service
 
+## Technology Stack
+![RedRecon Technology Stack](frontend/public/RedReconTechStack.png)
+
 ## 🚀 Features
 
 - **User Authentication**: Secure JWT-based registration and login
