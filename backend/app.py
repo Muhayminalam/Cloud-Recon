@@ -15,15 +15,11 @@ app = FastAPI(
 )
 
 # CORS Configuration - UPDATED to include the correct Vercel URL
+# CORS Configuration - TEMPORARY: Allow all origins for testing
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Local development frontend
-        "https://redrecon.vercel.app",  # Original (keeping for compatibility)
-        "https://red-recon.vercel.app"  # ADDED: Your actual Vercel URL with hyphen
-    ],
-    allow_origin_regex=r"https://.*\.vercel\.app",  # Any Vercel preview deployment
-    allow_credentials=True,
+    allow_origins=["*"],  # TEMPORARY: Allow all origins
+    allow_credentials=False,  # Must be False when allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
