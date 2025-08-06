@@ -41,8 +41,8 @@ def connect_to_mongodb():
         client.admin.command('ping')
         print("✅ Successfully connected to MongoDB Atlas!")
         
-        # Get database - using 'redrecon' (lowercase) to match connection string
-        db = client.redrecon
+        # Get database - using 'RedRecon' (capital R) to match Atlas database
+        db = client.RedRecon
         
         # Collections
         users_collection = db.users
