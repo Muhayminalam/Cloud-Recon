@@ -3,7 +3,6 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 import os
 from dotenv import load_dotenv
 
-# Force redeploy - updated 2025-08-05 at 6:25 PM
 # Load environment variables
 load_dotenv()
 
@@ -77,7 +76,7 @@ def get_database():
         print("🔄 Attempting to reconnect to MongoDB...")
         mongodb_connected = connect_to_mongodb()
     
-    if not db:
+    if db is None:  # ✅ Fixed: Use 'is None' instead of 'not db'
         raise ConnectionFailure("MongoDB is not connected. Please check your connection.")
     
     return db
@@ -90,7 +89,7 @@ def get_users_collection():
         print("🔄 Attempting to reconnect to MongoDB...")
         mongodb_connected = connect_to_mongodb()
     
-    if not users_collection:
+    if users_collection is None:  # ✅ Fixed: Use 'is None' instead of 'not users_collection'
         raise ConnectionFailure("MongoDB is not connected. Please check your connection.")
     
     return users_collection
@@ -103,7 +102,7 @@ def get_logs_collection():
         print("🔄 Attempting to reconnect to MongoDB...")
         mongodb_connected = connect_to_mongodb()
     
-    if not logs_collection:
+    if logs_collection is None:  # ✅ Fixed: Use 'is None' instead of 'not logs_collection'
         raise ConnectionFailure("MongoDB is not connected. Please check your connection.")
     
     return logs_collection
@@ -116,7 +115,7 @@ def get_cves_collection():
         print("🔄 Attempting to reconnect to MongoDB...")
         mongodb_connected = connect_to_mongodb()
     
-    if not cves_collection:
+    if cves_collection is None:  # ✅ Fixed: Use 'is None' instead of 'not cves_collection'
         raise ConnectionFailure("MongoDB is not connected. Please check your connection.")
     
     return cves_collection
