@@ -98,7 +98,7 @@ export default function ActivityLogs() {
   const getToolColor = (tool: string) => {
     switch (tool) {
       case 'scan':
-        return 'text-red-400 bg-red-400/10';
+        return 'text-blue-700 bg-blue-700/10';
       case 'payload':
         return 'text-blue-400 bg-blue-400/10';
       default:
@@ -154,7 +154,7 @@ export default function ActivityLogs() {
             {result.success ? (
               <CheckCircle className="h-4 w-4 text-green-400" />
             ) : (
-              <AlertCircle className="h-4 w-4 text-red-400" />
+              <AlertCircle className="h-4 w-4 text-blue-700" />
             )}
           </div>
           <div className="flex items-center space-x-2">
@@ -165,7 +165,7 @@ export default function ActivityLogs() {
             <div className="flex items-center space-x-2">
               <span className="text-gray-400">Risk:</span>
               <span className={`px-2 py-1 text-xs rounded-full ${
-                result.response.risk_level === 'critical' ? 'bg-red-400/10 text-red-400' :
+                result.response.risk_level === 'critical' ? 'bg-blue-700/10 text-blue-700' :
                 result.response.risk_level === 'high' ? 'bg-orange-400/10 text-orange-400' :
                 result.response.risk_level === 'medium' ? 'bg-yellow-400/10 text-yellow-400' :
                 'bg-green-400/10 text-green-400'
@@ -396,7 +396,7 @@ export default function ActivityLogs() {
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertCircle className="h-5 w-5 text-red-400" />
+                      <AlertCircle className="h-5 w-5 text-blue-700" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>
@@ -468,12 +468,12 @@ export default function ActivityLogs() {
                                         Success: {log.result.success ? (
                                           <CheckCircle className="h-3 w-3 text-green-400 ml-1" />
                                         ) : (
-                                          <AlertCircle className="h-3 w-3 text-red-400 ml-1" />
+                                          <AlertCircle className="h-3 w-3 text-blue-700 ml-1" />
                                         )}
                                       </span>
                                       {log.result.response?.risk_level && (
                                         <span className={`px-2 py-1 text-xs rounded-full ${
-                                          log.result.response.risk_level === 'critical' ? 'bg-red-400/10 text-red-400' :
+                                          log.result.response.risk_level === 'critical' ? 'bg-blue-700/10 text-blue-700' :
                                           log.result.response.risk_level === 'high' ? 'bg-orange-400/10 text-orange-400' :
                                           log.result.response.risk_level === 'medium' ? 'bg-yellow-400/10 text-yellow-400' :
                                           'bg-green-400/10 text-green-400'
@@ -490,7 +490,7 @@ export default function ActivityLogs() {
                             <div className="flex items-center space-x-2 flex-shrink-0 ml-4">
                               <button
                                 onClick={() => toggleLogExpansion(log.id)}
-                                className="text-gray-400 hover:text-red-400 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
+                                className="text-gray-400 hover:text-blue-700 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
                                 title="Toggle details"
                               >
                                 {expandedLog === log.id ? (
@@ -501,7 +501,7 @@ export default function ActivityLogs() {
                               </button>
                               <button
                                 onClick={() => handleDeleteLog(log.id)}
-                                className="text-gray-400 hover:text-red-400 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
+                                className="text-gray-400 hover:text-blue-700 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
                                 title="Delete log"
                               >
                                 <Trash2 className="h-4 w-4" />

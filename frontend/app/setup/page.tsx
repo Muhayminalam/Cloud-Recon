@@ -178,7 +178,7 @@ export default function LabSetup() {
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertTriangle className="h-5 w-5 text-red-400" />
+                      <AlertTriangle className="h-5 w-5 text-blue-700" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>
@@ -247,7 +247,7 @@ export default function LabSetup() {
                         <div className="flex items-start justify-between">
                           <div className="flex items-start space-x-3">
                             <div className="bg-red-600/20 p-2 rounded-lg">
-                              <tool.icon className="h-6 w-6 text-red-400" />
+                              <tool.icon className="h-6 w-6 text-blue-700" />
                             </div>
                             <div>
                               <h3 className="text-white font-medium">{tool.name}</h3>
@@ -373,7 +373,7 @@ export default function LabSetup() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                     >
-                      <ExternalLink className="h-5 w-5 text-red-400 mr-3" />
+                      <ExternalLink className="h-5 w-5 text-blue-700 mr-3" />
                       <div>
                         <h3 className="text-white font-medium">Metasploit Unleashed</h3>
                         <p className="text-sm text-gray-400">Free Metasploit course</p>
@@ -385,7 +385,7 @@ export default function LabSetup() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                     >
-                      <ExternalLink className="h-5 w-5 text-red-400 mr-3" />
+                      <ExternalLink className="h-5 w-5 text-blue-700 mr-3" />
                       <div>
                         <h3 className="text-white font-medium">OWASP WebGoat</h3>
                         <p className="text-sm text-gray-400">Vulnerable web application</p>

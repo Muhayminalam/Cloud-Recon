@@ -191,7 +191,7 @@ export default function Dashboard() {
 
   const getStatColor = (color: string) => {
     const colors = {
-      red: 'text-red-400',
+      red: 'text-blue-700',
       blue: 'text-blue-400',
       orange: 'text-orange-400',
       green: 'text-green-400'

@@ -88,9 +88,9 @@ export default function Register() {
           {error && (
             <div className="p-4 w-full max-w-[550px] mb-12 border border-red-600 rounded-lg bg-red-600/10">
               <div className="flex items-start">
-                <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-blue-700 mt-0.5 flex-shrink-0" />
                 <div className="ml-3">
-                  <h3 className="text-red-400 font-semibold mb-1">Registration Error</h3>
+                  <h3 className="text-blue-700 font-semibold mb-1">Registration Error</h3>
                   <p className="text-red-300">{error}</p>
                 </div>
               </div>
@@ -172,9 +172,9 @@ export default function Register() {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-red-400 transition-colors" />
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-red-400 transition-colors" />
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
                 )}
               </button>
             </div>
@@ -217,9 +217,9 @@ export default function Register() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-red-400 transition-colors" />
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-red-400 transition-colors" />
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
                 )}
               </button>
             </div>
@@ -245,7 +245,7 @@ export default function Register() {
                 Already have an account?{' '}
                 <Link 
                   href="/login" 
-                  className="text-red-500 hover:text-red-400 font-semibold underline underline-offset-2 transition-colors duration-200"
+                  className="text-red-500 hover:text-blue-700 font-semibold underline underline-offset-2 transition-colors duration-200"
                 >
                   Sign in here
                 </Link>

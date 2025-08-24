@@ -92,7 +92,7 @@ export default function CVEDatabase() {
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case 'critical':
-        return 'text-red-400 bg-red-400/10 border-red-400/20';
+        return 'text-blue-700 bg-blue-700/10 border-blue-700/20';
       case 'high':
         return 'text-orange-400 bg-orange-400/10 border-orange-400/20';
       case 'medium':
@@ -292,7 +292,7 @@ export default function CVEDatabase() {
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertTriangle className="h-5 w-5 text-red-400" />
+                      <AlertTriangle className="h-5 w-5 text-blue-700" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>

@@ -98,7 +98,7 @@ export default function NetworkScan() {
       case 'open':
         return 'text-green-400 bg-green-400/10';
       case 'closed':
-        return 'text-red-400 bg-red-400/10';
+        return 'text-blue-700 bg-blue-700/10';
       case 'filtered':
         return 'text-yellow-400 bg-yellow-400/10';
       default:
@@ -273,7 +273,7 @@ export default function NetworkScan() {
                         }}
                       >
                         <div className="flex items-center">
-                          <AlertCircle className="h-5 w-5 text-red-400 mr-3" />
+                          <AlertCircle className="h-5 w-5 text-blue-700 mr-3" />
                           <p className="text-sm text-red-300">{error}</p>
                         </div>
                       </div>
