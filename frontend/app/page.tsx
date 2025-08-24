@@ -48,18 +48,18 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)' }}>
       {/* Hero Section */}
-      <div className="hero-section relative overflow-hidden pt-32 pb-40" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)', borderBottom: '2px solid #dc2626', marginBottom: '8px' }}>
+      <div className="hero-section relative overflow-hidden pt-32 pb-40" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)', borderBottom: '2px solid #1d4ed8', marginBottom: '8px' }}>
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 lg:grid lg:grid-cols-2 lg:gap-16 items-center">
             <main className="px-6 sm:px-8 lg:px-12">
               <div className="text-center lg:text-left">
                 <h1 className="text-5xl lg:text-6xl font-extrabold mb-8 leading-tight" style={{ color: 'white' }}>
-                  <span style={{ color: '#dc2626' }}> Cloud Recon: </span>
-                  <span style={{ color: 'white' }}>Cloud Security Simulation</span>
+                  <span style={{ color: '#1d4ed8' }}> Red Recon: </span>
+                  <span style={{ color: 'white' }}>Red Team Simulation</span>
                 </h1>
                 <p className="text-xl mb-12 max-w-2xl leading-relaxed" style={{ color: 'white' }}>
-                  Cloud security assessment and posture management platform.
-Gain hands-on experience with cloud misconfigurations and defenses in a safe, controlled environment.
+                  Professional penetration testing and security assessment platform. 
+                  Practice ethical hacking techniques in a controlled environment.
                 </p>
                 <div className="btn-container" style={{ marginTop: '3rem' }}>
                   {isLoggedIn ? (
@@ -85,11 +85,11 @@ Gain hands-on experience with cloud misconfigurations and defenses in a safe, co
                 <div 
                   className="w-80 h-80 rounded-full flex items-center justify-center"
                   style={{ 
-                    background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%)',
-                    boxShadow: '0 0 60px rgba(220, 38, 38, 0.5)'
+                    background: 'linear-gradient(135deg, rgba(29, 78, 216, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%)',
+                    boxShadow: '0 0 60px rgba(29, 78, 216, 0.5)'
                   }}
                 >
-                  <Shield className="h-40 w-40" style={{ color: '#dc2626', filter: 'drop-shadow(0 0 20px rgba(220, 38, 38, 0.9))' }} />
+                  <Shield className="h-40 w-40" style={{ color: '#1d4ed8', filter: 'drop-shadow(0 0 20px rgba(29, 78, 216, 0.9))' }} />
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ Gain hands-on experience with cloud misconfigurations and defenses in a safe, co
       <div className="features-section pt-40 pb-40" style={{ background: '#111111', marginTop: '8px', marginBottom: '8px' }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-20">
-            <h2 className="text-lg font-semibold tracking-wide uppercase mb-6" style={{ color: '#dc2626' }}>Features</h2>
+            <h2 className="text-lg font-semibold tracking-wide uppercase mb-6" style={{ color: '#1d4ed8' }}>Features</h2>
             <h3 className="text-4xl font-extrabold mb-8 leading-tight" style={{ color: 'white' }}>
               Comprehensive Security Testing
             </h3>
@@ -120,9 +120,9 @@ Gain hands-on experience with cloud misconfigurations and defenses in a safe, co
                 <div className="flex items-start space-x-8">
                   <div 
                     className="p-6 rounded-lg flex-shrink-0"
-                    style={{ background: 'rgba(220, 38, 38, 0.15)' }}
+                    style={{ background: 'rgba(29, 78, 216, 0.15)' }}
                   >
-                    <feature.icon className="h-9 w-9" style={{ color: '#dc2626' }} />
+                    <feature.icon className="h-9 w-9" style={{ color: '#1d4ed8' }} />
                   </div>
                   <div>
                     <h4 className="text-2xl font-semibold mb-6" style={{ color: 'white' }}>{feature.title}</h4>
@@ -136,7 +136,7 @@ Gain hands-on experience with cloud misconfigurations and defenses in a safe, co
       </div>
 
       {/* CTA Section */}
-      <div className="cta-section pt-40 pb-40" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)', borderTop: '2px solid #dc2626', marginTop: '8px' }}>
+      <div className="cta-section pt-40 pb-40" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)', borderTop: '2px solid #1d4ed8', marginTop: '8px' }}>
         <div className="max-w-4xl mx-auto text-center px-6 sm:px-8 lg:px-12">
           <h2 className="text-4xl font-extrabold mb-8 leading-tight" style={{ color: 'white' }}>
             Ready to start testing?
