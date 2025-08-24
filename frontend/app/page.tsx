@@ -54,8 +54,8 @@ export default function Home() {
             <main className="px-6 sm:px-8 lg:px-12">
               <div className="text-center lg:text-left">
                 <h1 className="text-5xl lg:text-6xl font-extrabold mb-8 leading-tight" style={{ color: 'white' }}>
-                  <span style={{ color: '#1d4ed8' }}> Red Recon: </span>
-                  <span style={{ color: 'white' }}>Red Team Simulation</span>
+                  <span style={{ color: '#1d4ed8' }}> Cloud Recon: </span>
+                  <span style={{ color: 'white' }}>Cloud Security Simulation</span>
                 </h1>
                 <p className="text-xl mb-12 max-w-2xl leading-relaxed" style={{ color: 'white' }}>
                   Professional penetration testing and security assessment platform. 
