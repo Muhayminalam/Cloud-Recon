@@ -58,8 +58,8 @@ export default function Home() {
                   <span style={{ color: 'white' }}>Cloud Security Simulation</span>
                 </h1>
                 <p className="text-xl mb-12 max-w-2xl leading-relaxed" style={{ color: 'white' }}>
-                  Professional penetration testing and security assessment platform. 
-                  Practice ethical hacking techniques in a controlled environment.
+                  Professional cloud security assessment and posture management platform.
+Practice identifying misconfigurations and strengthening defenses in a safe, controlled environment.
                 </p>
                 <div className="btn-container" style={{ marginTop: '3rem' }}>
                   {isLoggedIn ? (
