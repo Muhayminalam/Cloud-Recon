@@ -1,8 +1,8 @@
-# RedRecon - Red Team Simulation Platform
+# Cloud Recon - Cloud Security Assessment Platform
 
-A comprehensive penetration testing and security assessment platform built with FastAPI and Next.js. RedRecon provides a secure environment for practicing ethical hacking techniques and red team exercises.
+A comprehensive cloud security assessment and testing platform built with FastAPI and Next.js. Cloud Recon provides a secure environment for practicing cloud security techniques and cloud infrastructure assessments.
 
-## 🏗️ Architecture
+## Architecture
 
 - **Frontend**: Next.js 14 + TypeScript + Tailwind CSS
 - **Backend**: FastAPI + Python 3.10+
@@ -13,22 +13,22 @@ A comprehensive penetration testing and security assessment platform built with 
   - Backend: Azure App Service
 
 ## Technology Stack
-![RedRecon Technology Stack](frontend/public/RedReconTechStack.png)
+![Cloud Recon Technology Stack](frontend/public/RedReconTechStack.png)
 
-## 🚀 Features
+## Features
 
 - **User Authentication**: Secure JWT-based registration and login
-- **Network Scanning**: Simulated Nmap-style port scanning and reconnaissance
-- **Payload Testing**: XSS, SQLi, CSRF, LFI, and RFI payload simulation
-- **Activity Logging**: Comprehensive logging of all security testing activities
-- **CVE Database**: Access to vulnerability information and exploit data
-- **PCAP Analysis**: Sample network traffic analysis
-- **Lab Setup Guide**: Instructions for setting up penetration testing environments
+- **Cloud Infrastructure Discovery**: Simulated cloud asset discovery and service enumeration
+- **Cloud Security Validation**: API misconfigurations, IAM issues, S3 bucket exposure, serverless injection, and container escape testing
+- **Cloud Audit Trail**: Comprehensive logging of all cloud security assessment activities
+- **Cloud Threat Intelligence**: Access to cloud-specific vulnerability information and security advisories
+- **Cloud Traffic Analysis**: Sample cloud network traffic and API call analysis
+- **Cloud Environment Setup Guide**: Instructions for setting up cloud security testing environments
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-redrecon/
+cloud-recon/
 ├── backend/                  # FastAPI application
 │   ├── main.py              # Application entry point
 │   ├── db.py                # MongoDB connection
@@ -45,7 +45,7 @@ redrecon/
 └── README.md
 ```
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -60,7 +60,7 @@ redrecon/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd redrecon/backend
+   cd cloud-recon/backend
    ```
 
 2. **Create virtual environment**
@@ -112,11 +112,11 @@ The API will be available at `http://localhost:8000`
 
 The frontend will be available at `http://localhost:3000`
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend (.env)
 ```bash
-MONGO_URI=mongodb+srv://<USERNAME>:<PASSWORD>@<CLUSTER>.mongodb.net/redrecon?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://<USERNAME>:<PASSWORD>@<CLUSTER>.mongodb.net/cloudrecon?retryWrites=true&w=majority
 JWT_SECRET_KEY=your-super-secure-jwt-secret-key
 ```
 
@@ -125,7 +125,7 @@ JWT_SECRET_KEY=your-super-secure-jwt-secret-key
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Backend (Azure App Service)
 
@@ -149,7 +149,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 3. **Deploy automatically via Git push**
 
-## 📚 API Documentation
+## API Documentation
 
 Once the backend is running, visit `http://localhost:8000/docs` for interactive API documentation powered by FastAPI and Swagger UI.
 
@@ -158,14 +158,14 @@ Once the backend is running, visit `http://localhost:8000/docs` for interactive 
 - `POST /api/register` - User registration
 - `POST /api/login` - User authentication
 - `GET /api/me` - Get current user profile
-- `POST /api/scan` - Perform network scan
-- `POST /api/payload` - Test security payloads
-- `GET /api/logs` - Retrieve activity logs
-- `GET /api/cves` - Get CVE information
-- `GET /api/pcap` - Get PCAP analysis data
-- `GET /api/setup` - Get lab setup guide
+- `POST /api/discover` - Perform cloud infrastructure discovery
+- `POST /api/validate` - Test cloud security configurations
+- `GET /api/audit` - Retrieve cloud audit trail
+- `GET /api/threats` - Get cloud threat intelligence
+- `GET /api/traffic` - Get cloud traffic analysis data
+- `GET /api/setup` - Get cloud environment setup guide
 
-## 🔒 Security Features
+## Security Features
 
 - **JWT Authentication**: Secure token-based authentication
 - **Password Hashing**: bcrypt for secure password storage
@@ -173,7 +173,7 @@ Once the backend is running, visit `http://localhost:8000/docs` for interactive 
 - **Input Validation**: Pydantic models for API validation
 - **Rate Limiting**: Built-in protection against abuse
 
-## 🧪 Testing
+## Testing
 
 ### Backend Testing
 ```bash
@@ -187,29 +187,29 @@ cd frontend
 npm run test
 ```
 
-## 📝 Usage Examples
+## Usage Examples
 
-### Network Scanning
+### Cloud Infrastructure Discovery
 ```bash
-curl -X POST "http://localhost:8000/api/scan" \
+curl -X POST "http://localhost:8000/api/discover" \
      -H "Authorization: Bearer YOUR_JWT_TOKEN" \
      -H "Content-Type: application/json" \
-     -d '{"target": "192.168.1.1"}'
+     -d '{"target": "api.example.com"}'
 ```
 
-### Payload Testing
+### Cloud Security Validation
 ```bash
-curl -X POST "http://localhost:8000/api/payload" \
+curl -X POST "http://localhost:8000/api/validate" \
      -H "Authorization: Bearer YOUR_JWT_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
-       "payload_type": "xss",
-       "target_url": "https://example.com",
-       "payload": "<script>alert(1)</script>"
+       "test_type": "api_misconfiguration",
+       "target_url": "https://api.example.com",
+       "payload": "GET /api/v1/users?admin=true"
      }'
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -217,14 +217,15 @@ curl -X POST "http://localhost:8000/api/payload" \
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## ⚖️ Legal Disclaimer
+## Legal Disclaimer
 
-This platform is designed for educational purposes and authorized security testing only. Users are responsible for ensuring they have proper authorization before testing any systems. The developers are not responsible for any misuse of this platform.
+This platform is designed for educational purposes and authorized cloud security testing only. Users are responsible for ensuring they have proper authorization before testing any cloud systems. The developers are not responsible for any misuse of this platform.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## Support
 
 For support, please open an issue on GitHub or contact the development team.
+

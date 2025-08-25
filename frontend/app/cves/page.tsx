@@ -15,12 +15,12 @@ import {
   Shield,
   Calendar,
   Tag,
-  Bug,
+  Cloud,
   Globe,
   Eye
 } from 'lucide-react';
 
-interface CVE {
+interface ThreatIntel {
   id: string;
   description: string;
   severity: string;
@@ -29,8 +29,8 @@ interface CVE {
   published_date: string;
 }
 
-export default function CVEDatabase() {
-  const [cves, setCves] = useState<CVE[]>([]);
+export default function CloudThreatIntelligence() {
+  const [threats, setThreats] = useState<ThreatIntel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,11 +42,11 @@ export default function CVEDatabase() {
     if (!auth.isAuthenticated()) {
       router.push('/login');
     } else {
-      fetchCVEs();
+      fetchThreats();
     }
   }, [router, severityFilter]);
 
-  const fetchCVEs = async () => {
+  const fetchThreats = async () => {
     setIsLoading(true);
     setError('');
     
@@ -57,9 +57,9 @@ export default function CVEDatabase() {
       }
       
       const response = await apiClient.getCVEs(params);
-      setCves(response.data);
+      setThreats(response.data);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to fetch CVEs');
+      setError(err.response?.data?.detail || 'Failed to fetch cloud threat intelligence');
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +67,7 @@ export default function CVEDatabase() {
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
-      fetchCVEs();
+      fetchThreats();
       return;
     }
 
@@ -76,7 +76,7 @@ export default function CVEDatabase() {
     
     try {
       const response = await apiClient.searchCVEs(searchTerm);
-      setCves(response.data);
+      setThreats(response.data);
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Search failed');
     } finally {
@@ -86,13 +86,13 @@ export default function CVEDatabase() {
 
   const handleClearSearch = () => {
     setSearchTerm('');
-    fetchCVEs();
+    fetchThreats();
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case 'critical':
-        return 'text-blue-700 bg-blue-700/10 border-blue-700/20';
+        return 'text-red-400 bg-red-400/10 border-red-400/20';
       case 'high':
         return 'text-orange-400 bg-orange-400/10 border-orange-400/20';
       case 'medium':
@@ -121,12 +121,12 @@ export default function CVEDatabase() {
     return new Date(dateString).toLocaleDateString();
   };
 
-  const filteredCVEs = cves.filter(cve => {
-    const matchesTag = selectedTag === '' || cve.tags.includes(selectedTag);
+  const filteredThreats = threats.filter(threat => {
+    const matchesTag = selectedTag === '' || threat.tags.includes(selectedTag);
     return matchesTag;
   });
 
-  const allTags = Array.from(new Set(cves.flatMap(cve => cve.tags))).sort();
+  const allTags = Array.from(new Set(threats.flatMap(threat => threat.tags))).sort();
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -143,8 +143,8 @@ export default function CVEDatabase() {
           <div className="md:pl-64 flex flex-col flex-1">
             <main className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-4 border-red-600 border-t-transparent mb-4 mx-auto"></div>
-                <p className="text-gray-400">Loading CVE database...</p>
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-4 mx-auto"></div>
+                <p className="text-gray-400">Loading cloud threat intelligence...</p>
               </div>
             </main>
           </div>
@@ -166,27 +166,27 @@ export default function CVEDatabase() {
                 <div className="mb-8 text-center">
                   <div className="flex items-center justify-center space-x-3 mb-4">
                     <Database 
-                      className="h-8 w-8" 
-                      style={{ color: '#dc2626', filter: 'drop-shadow(0 0 10px #dc2626)' }} 
+                      className="h-8 w-8 text-blue-500" 
+                      style={{ filter: 'drop-shadow(0 0 10px #3b82f6)' }} 
                     />
                     <h1 
-                      className="text-3xl font-bold" 
-                      style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}
+                      className="text-3xl font-bold text-blue-500" 
+                      style={{ textShadow: '0 0 10px #3b82f6' }}
                     >
-                      CVE Database
+                      Cloud Threat Intelligence
                     </h1>
                   </div>
                   <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-                    Access the most comprehensive database of Common Vulnerabilities and Exposures (CVEs) for penetration testing, 
-                    security research, and vulnerability assessment activities.
+                    Access up-to-date cloud-specific threats and security advisories for cloud security assessments, 
+                    threat hunting, and cloud infrastructure protection activities.
                   </p>
                 </div>
 
-                {/* What is CVE Database Section */}
-                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border-2 border-blue-500/30 rounded-xl p-8">
+                {/* What is Cloud Threat Intelligence Section */}
+                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-700/10 border-2 border-blue-500/30 rounded-xl p-8">
                   <div className="flex items-center space-x-3 mb-6">
-                    <Bug className="h-6 w-6 text-blue-400" />
-                    <h2 className="text-xl font-bold text-blue-300">What is the CVE Database?</h2>
+                    <Cloud className="h-6 w-6 text-blue-400" />
+                    <h2 className="text-xl font-bold text-blue-300">What is Cloud Threat Intelligence?</h2>
                   </div>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -195,13 +195,13 @@ export default function CVEDatabase() {
                       <div>
                         <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
                           <span className="mr-2">🔍</span>
-                          CVE Research & Discovery:
+                          Cloud Threat Research & Discovery:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• CVE (Common Vulnerabilities and Exposures) is a standardized database that provides unique identifiers for publicly known cybersecurity vulnerabilities.</p>
-                          <p>• Our database aggregates the latest CVEs with severity ratings, detailed descriptions, and actionable information for security professionals.</p>
-                          <p>• Search through thousands of vulnerabilities by keywords, severity levels, affected technologies, and publication dates.</p>
-                          <p>• Each CVE entry includes comprehensive details about the vulnerability, impact assessment, and links to official references.</p>
+                          <p>• Cloud Threat Intelligence aggregates the latest cloud-specific vulnerabilities, misconfigurations, and attack vectors targeting cloud environments.</p>
+                          <p>• Our database focuses on cloud platform security issues including AWS, Azure, GCP, and multi-cloud environment threats with actionable intelligence.</p>
+                          <p>• Search through cloud-specific threats by keywords, severity levels, affected cloud services, and publication dates.</p>
+                          <p>• Each threat entry includes comprehensive details about cloud attack methods, impact assessment, and links to official cloud security advisories.</p>
                         </div>
                       </div>
                     </div>
@@ -214,10 +214,10 @@ export default function CVEDatabase() {
                           Professional Applications:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• Essential tool for penetration testers to identify known vulnerabilities in target systems and applications.</p>
-                          <p>• Security researchers use CVE data to understand attack vectors and develop defensive strategies.</p>
-                          <p>• Vulnerability assessment teams leverage CVE information to prioritize patching and remediation efforts.</p>
-                          <p>• Compliance officers reference CVEs for regulatory reporting and risk management documentation.</p>
+                          <p>• Essential resource for cloud security teams to identify emerging threats targeting cloud infrastructure and services.</p>
+                          <p>• Cloud security researchers use threat intel to understand cloud-specific attack patterns and develop cloud defense strategies.</p>
+                          <p>• DevSecOps teams leverage cloud threat intelligence to secure CI/CD pipelines and cloud-native applications.</p>
+                          <p>• Cloud compliance officers reference threat data for cloud governance reporting and cloud risk management documentation.</p>
                         </div>
                       </div>
                     </div>
@@ -228,13 +228,13 @@ export default function CVEDatabase() {
                       <div>
                         <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
                           <span className="mr-2">🛡️</span>
-                          Severity Classifications:
+                          Cloud Threat Classifications:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• <strong>Critical:</strong> Vulnerabilities that allow immediate system compromise with minimal user interaction.</p>
-                          <p>• <strong>High:</strong> Serious security flaws that could lead to significant data breaches or system access.</p>
-                          <p>• <strong>Medium:</strong> Moderate vulnerabilities that require specific conditions to exploit effectively.</p>
-                          <p>• <strong>Low:</strong> Minor security issues with limited impact or requiring complex attack scenarios.</p>
+                          <p>• <strong>Critical:</strong> Cloud threats that allow immediate infrastructure compromise with minimal cloud access requirements.</p>
+                          <p>• <strong>High:</strong> Serious cloud security flaws that could lead to significant data breaches or cloud account takeover.</p>
+                          <p>• <strong>Medium:</strong> Moderate cloud vulnerabilities that require specific cloud configurations to exploit effectively.</p>
+                          <p>• <strong>Low:</strong> Minor cloud security issues with limited impact or requiring complex multi-cloud attack scenarios.</p>
                         </div>
                       </div>
                       
@@ -249,37 +249,37 @@ export default function CVEDatabase() {
                   className="bg-gray-800 shadow-xl rounded-xl p-6 mb-6" 
                   style={{ marginTop: '2rem' }}
                 >
-                  {/* Horizontal Statistics with Red Theme */}
+                  {/* Horizontal Statistics with Blue Theme */}
                   <div 
                     className="flex flex-wrap items-center justify-center mb-6" 
                     style={{ gap: '3rem', marginTop: '1rem' }}
                   >
                     <div className="flex items-center space-x-2">
-                      <Database className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Total CVEs: {filteredCVEs.length}
+                      <Database className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Total Threats: {filteredThreats.length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <AlertTriangle className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Critical: {filteredCVEs.filter(cve => cve.severity.toLowerCase() === 'critical').length}
+                      <AlertTriangle className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Critical: {filteredThreats.filter(threat => threat.severity.toLowerCase() === 'critical').length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Shield className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        High: {filteredCVEs.filter(cve => cve.severity.toLowerCase() === 'high').length}
+                      <Shield className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        High: {filteredThreats.filter(threat => threat.severity.toLowerCase() === 'high').length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Eye className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Recent: {filteredCVEs.filter(cve => {
-                          const date = new Date(cve.published_date);
+                      <Eye className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Recent: {filteredThreats.filter(threat => {
+                          const date = new Date(threat.published_date);
                           const thirtyDaysAgo = new Date();
                           thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
                           return date >= thirtyDaysAgo;
@@ -292,7 +292,7 @@ export default function CVEDatabase() {
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertTriangle className="h-5 w-5 text-blue-700" />
+                      <AlertTriangle className="h-5 w-5 text-red-400" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>
@@ -300,45 +300,45 @@ export default function CVEDatabase() {
                   </div>
                 )}
 
-                {/* CVE List */}
+                {/* Threat Intelligence List */}
                 <div className="bg-black shadow-xl rounded-xl p-6 mt-6 border border-gray-700">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-white">CVE Entries</h3>
+                    <h3 className="text-lg font-semibold text-white">Cloud Threat Advisories</h3>
                   </div>
                   
-                  {filteredCVEs.length === 0 ? (
+                  {filteredThreats.length === 0 ? (
                     <div className="text-center py-12">
                       <Database className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                      <h3 className="text-lg font-medium text-white mb-2">No CVEs found</h3>
+                      <h3 className="text-lg font-medium text-white mb-2">No cloud threats found</h3>
                       <p className="text-gray-400">
-                        No example CVE data available at the moment.
+                        No example cloud threat intelligence data available at the moment.
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
-                      {filteredCVEs.map((cve) => (
+                      {filteredThreats.map((threat) => (
                         <div 
-                          key={cve.id} 
+                          key={threat.id} 
                           className="bg-black hover:bg-white rounded-lg p-4 border border-gray-700 hover:border-black cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl group"
                         >
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center space-x-3 mb-3">
-                                <h3 className="text-lg font-medium text-white group-hover:text-black">{cve.id}</h3>
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getSeverityColor(cve.severity)}`}>
-                                  {getSeverityIcon(cve.severity)}
-                                  <span className="ml-1">{cve.severity.toUpperCase()}</span>
+                                <h3 className="text-lg font-medium text-white group-hover:text-black">{threat.id}</h3>
+                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getSeverityColor(threat.severity)}`}>
+                                  {getSeverityIcon(threat.severity)}
+                                  <span className="ml-1">{threat.severity.toUpperCase()}</span>
                                 </span>
                                 <div className="flex items-center text-sm text-gray-400 group-hover:text-gray-600">
                                   <Calendar className="h-4 w-4 mr-1" />
-                                  {formatDate(cve.published_date)}
+                                  {formatDate(threat.published_date)}
                                 </div>
                               </div>
                               
-                              <p className="text-gray-300 group-hover:text-gray-700 mb-4 leading-relaxed">{cve.description}</p>
+                              <p className="text-gray-300 group-hover:text-gray-700 mb-4 leading-relaxed">{threat.description}</p>
                               
                               <div className="flex flex-wrap gap-2 mb-4">
-                                {cve.tags.map((tag) => (
+                                {threat.tags.map((tag) => (
                                   <span
                                     key={tag}
                                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300 group-hover:bg-gray-200 group-hover:text-gray-700"
@@ -352,13 +352,13 @@ export default function CVEDatabase() {
                             
                             <div className="ml-4">
                               <a
-                                href={cve.reference}
+                                href={threat.reference}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-red-600 hover:text-white hover:border-red-600 group-hover:bg-gray-200 group-hover:text-gray-800 group-hover:border-gray-400 group-hover:hover:bg-red-600 group-hover:hover:text-white group-hover:hover:border-red-600 transition-all duration-200"
+                                className="inline-flex items-center px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-blue-700 hover:text-white hover:border-blue-700 group-hover:bg-gray-200 group-hover:text-gray-800 group-hover:border-gray-400 group-hover:hover:bg-blue-700 group-hover:hover:text-white group-hover:hover:border-blue-700 transition-all duration-200"
                               >
                                 <ExternalLink className="h-4 w-4 mr-2" />
-                                View Details
+                                View Advisory
                               </a>
                             </div>
                           </div>

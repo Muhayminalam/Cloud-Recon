@@ -8,8 +8,8 @@ import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import { 
   FileText, 
-  Search, 
-  Zap, 
+  Cloud, 
+  Shield, 
   Trash2, 
   Filter, 
   Calendar,
@@ -17,7 +17,6 @@ import {
   ChevronUp,
   AlertCircle,
   CheckCircle,
-  Shield,
   Clock,
   Activity
 } from 'lucide-react';
@@ -31,7 +30,7 @@ interface LogEntry {
   timestamp: string;
 }
 
-export default function ActivityLogs() {
+export default function CloudAuditTrail() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -64,7 +63,7 @@ export default function ActivityLogs() {
   };
 
   const handleDeleteLog = async (logId: string) => {
-    if (!confirm('Are you sure you want to delete this log entry?')) {
+    if (!confirm('Are you sure you want to delete this audit entry?')) {
       return;
     }
 
@@ -72,7 +71,7 @@ export default function ActivityLogs() {
       await apiClient.deleteLog(logId);
       setLogs(logs.filter(log => log.id !== logId));
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to delete log');
+      setError(err.response?.data?.detail || 'Failed to delete audit entry');
     }
   };
 
@@ -87,9 +86,9 @@ export default function ActivityLogs() {
   const getToolIcon = (tool: string) => {
     switch (tool) {
       case 'scan':
-        return <Search className="h-5 w-5" />;
+        return <Cloud className="h-5 w-5" />;
       case 'payload':
-        return <Zap className="h-5 w-5" />;
+        return <Shield className="h-5 w-5" />;
       default:
         return <FileText className="h-5 w-5" />;
     }
@@ -98,9 +97,9 @@ export default function ActivityLogs() {
   const getToolColor = (tool: string) => {
     switch (tool) {
       case 'scan':
-        return 'text-blue-700 bg-blue-700/10';
-      case 'payload':
         return 'text-blue-400 bg-blue-400/10';
+      case 'payload':
+        return 'text-blue-600 bg-blue-600/10';
       default:
         return 'text-gray-400 bg-gray-400/10';
     }
@@ -129,14 +128,14 @@ export default function ActivityLogs() {
             <span className="text-green-400">{result.status}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-gray-400">Open Ports:</span>
+            <span className="text-gray-400">Open Services:</span>
             <span className="text-white">
               {result.ports?.filter((p: any) => p.state === 'open').length || 0}
             </span>
           </div>
           {result.os_info && (
             <div className="flex items-center space-x-2">
-              <span className="text-gray-400">OS:</span>
+              <span className="text-gray-400">Platform:</span>
               <span className="text-white">{result.os_info.name} {result.os_info.version}</span>
             </div>
           )}
@@ -147,14 +146,14 @@ export default function ActivityLogs() {
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <span className="text-gray-400">Type:</span>
-            <span className="text-white">{result.payload_type}</span>
+            <span className="text-white">{result.test_type || result.payload_type}</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-gray-400">Success:</span>
             {result.success ? (
               <CheckCircle className="h-4 w-4 text-green-400" />
             ) : (
-              <AlertCircle className="h-4 w-4 text-blue-700" />
+              <AlertCircle className="h-4 w-4 text-red-400" />
             )}
           </div>
           <div className="flex items-center space-x-2">
@@ -165,7 +164,7 @@ export default function ActivityLogs() {
             <div className="flex items-center space-x-2">
               <span className="text-gray-400">Risk:</span>
               <span className={`px-2 py-1 text-xs rounded-full ${
-                result.response.risk_level === 'critical' ? 'bg-blue-700/10 text-blue-700' :
+                result.response.risk_level === 'critical' ? 'bg-red-400/10 text-red-400' :
                 result.response.risk_level === 'high' ? 'bg-orange-400/10 text-orange-400' :
                 result.response.risk_level === 'medium' ? 'bg-yellow-400/10 text-yellow-400' :
                 'bg-green-400/10 text-green-400'
@@ -194,8 +193,8 @@ export default function ActivityLogs() {
           <div className="md:pl-64 flex flex-col flex-1">
             <main className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-4 border-red-600 border-t-transparent mb-4 mx-auto"></div>
-                <p className="text-gray-400">Loading activity logs...</p>
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-4 mx-auto"></div>
+                <p className="text-gray-400">Loading cloud audit trail...</p>
               </div>
             </main>
           </div>
@@ -217,27 +216,27 @@ export default function ActivityLogs() {
                 <div className="mb-8 text-center">
                   <div className="flex items-center justify-center space-x-3 mb-4">
                     <FileText 
-                      className="h-8 w-8" 
-                      style={{ color: '#dc2626', filter: 'drop-shadow(0 0 10px #dc2626)' }} 
+                      className="h-8 w-8 text-blue-500" 
+                      style={{ filter: 'drop-shadow(0 0 10px #3b82f6)' }} 
                     />
                     <h1 
-                      className="text-3xl font-bold" 
-                      style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}
+                      className="text-3xl font-bold text-blue-500" 
+                      style={{ textShadow: '0 0 10px #3b82f6' }}
                     >
-                      Activity Logs
+                      Cloud Audit Trail
                     </h1>
                   </div>
                   <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-                    Monitor and analyze all your penetration testing activities, including network scans, 
-                    payload tests, and security assessments for comprehensive audit trails.
+                    Monitor and analyze all your cloud security assessment activities, including infrastructure discovery, 
+                    security validation tests, and compliance checks for comprehensive audit trails.
                   </p>
                 </div>
 
                 {/* How to Use Section - Improved Layout */}
-                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border-2 border-blue-500/30 rounded-xl p-8">
+                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-700/10 border-2 border-blue-500/30 rounded-xl p-8">
                   <div className="flex items-center space-x-3 mb-6">
                     <Shield className="h-6 w-6 text-blue-400" />
-                    <h2 className="text-xl font-bold text-blue-300">What Are Activity Logs?</h2>
+                    <h2 className="text-xl font-bold text-blue-300">What Are Cloud Audit Trails?</h2>
                   </div>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -249,10 +248,10 @@ export default function ActivityLogs() {
                           What Gets Logged:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• Our system automatically records all network scan attempts and their detailed results, including open ports and service information.</p>
-                          <p>• Every payload testing activity is logged with complete outcomes, response codes, and success indicators.</p>
-                          <p>• Target systems are tracked with precise timestamps to maintain a chronological audit trail.</p>
-                          <p>• Success and failure statuses are documented for each penetration test to evaluate effectiveness.</p>
+                          <p>• Our system automatically records all cloud infrastructure discovery attempts and their detailed results, including exposed services and configuration information.</p>
+                          <p>• Every cloud security validation activity is logged with complete outcomes, response codes, and vulnerability indicators.</p>
+                          <p>• Target cloud endpoints are tracked with precise timestamps to maintain a chronological compliance audit trail.</p>
+                          <p>• Success and failure statuses are documented for each cloud assessment to evaluate security posture effectiveness.</p>
                         </div>
                       </div>
                     </div>
@@ -262,13 +261,13 @@ export default function ActivityLogs() {
                       <div>
                         <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
                           <span className="mr-2">🔍</span>
-                          Why Logs Matter:
+                          Why Cloud Audits Matter:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• Track your testing progress and coverage across multiple target systems to ensure comprehensive assessments.</p>
-                          <p>• Maintain detailed audit trails that meet compliance requirements for professional security testing.</p>
-                          <p>• Identify successful attack vectors and vulnerability patterns to improve your testing methodology.</p>
-                          <p>• Document all findings systematically to create professional penetration testing reports for clients.</p>
+                          <p>• Track your cloud security testing progress and coverage across multiple cloud environments to ensure comprehensive assessments.</p>
+                          <p>• Maintain detailed compliance audit trails that meet cloud governance requirements for professional cloud security testing.</p>
+                          <p>• Identify successful cloud attack vectors and configuration weaknesses to improve your cloud security methodology.</p>
+                          <p>• Document all cloud security findings systematically to create professional cloud security assessment reports for stakeholders.</p>
                         </div>
                       </div>
                     </div>
@@ -282,19 +281,19 @@ export default function ActivityLogs() {
                           Professional Use:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• Generate evidence-backed penetration test reports with detailed proof of testing activities and findings.</p>
-                          <p>• Create comprehensive timelines of security assessments for client presentations and documentation.</p>
+                          <p>• Generate evidence-backed cloud security assessment reports with detailed proof of testing activities and findings.</p>
+                          <p>• Create comprehensive timelines of cloud security evaluations for compliance presentations and documentation.</p>
                         </div>
                       </div>
                       
                       <div>
                         <h3 className="font-semibold text-blue-200 mb-3 flex items-center">
                           <span className="mr-2">🛠️</span>
-                          Log Management:
+                          Audit Management:
                         </h3>
                         <div className="space-y-2 text-sm text-blue-100">
-                          <p>• Filter logs by tool type (network scans or payload tests) to focus on specific testing activities.</p>
-                          <p>• Search through test targets and expand entries to view detailed results and delete outdated records.</p>
+                          <p>• Filter audit entries by tool type (infrastructure discovery or security validation) to focus on specific cloud testing activities.</p>
+                          <p>• Search through cloud endpoints and expand entries to view detailed results and delete outdated audit records.</p>
                         </div>
                       </div>
                     </div>
@@ -306,35 +305,35 @@ export default function ActivityLogs() {
                   className="bg-gray-800 shadow-xl rounded-xl p-6 mb-6" 
                   style={{ marginTop: '2rem' }}
                 >
-                  {/* Horizontal Statistics with Red Theme */}
+                  {/* Horizontal Statistics with Blue Theme */}
                   <div 
                     className="flex flex-wrap items-center justify-center mb-6" 
                     style={{ gap: '3rem', marginTop: '1rem' }}
                   >
                     <div className="flex items-center space-x-2">
-                      <Activity className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Total Logs: {filteredLogs.length}
+                      <Activity className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Total Audits: {filteredLogs.length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Search className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Network Scans: {filteredLogs.filter(log => log.tool === 'scan').length}
+                      <Cloud className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Infrastructure Discoveries: {filteredLogs.filter(log => log.tool === 'scan').length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Zap className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
-                        Payload Tests: {filteredLogs.filter(log => log.tool === 'payload').length}
+                      <Shield className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
+                        Security Validations: {filteredLogs.filter(log => log.tool === 'payload').length}
                       </span>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Clock className="h-6 w-6" style={{ color: '#ef4444' }} />
-                      <span className="font-semibold text-lg" style={{ color: '#ef4444' }}>
+                      <Clock className="h-6 w-6 text-blue-500" />
+                      <span className="font-semibold text-lg text-blue-500">
                         Last Activity: {filteredLogs.length > 0 ? 'Recent' : 'None'}
                       </span>
                     </div>
@@ -347,11 +346,11 @@ export default function ActivityLogs() {
                       <select
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
-                        className="w-full h-12 appearance-none bg-gray-700 border border-gray-600 text-white px-4 rounded-l-md focus:outline-none focus:ring-red-500 focus:border-red-500"
+                        className="w-full h-12 appearance-none bg-gray-700 border border-gray-600 text-white px-4 rounded-l-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       >
                         <option value="all">All Tools</option>
-                        <option value="scan">Network Scans</option>
-                        <option value="payload">Payload Tests</option>
+                        <option value="scan">Infrastructure Discovery</option>
+                        <option value="payload">Security Validation</option>
                       </select>
                     </div>
 
@@ -381,12 +380,12 @@ export default function ActivityLogs() {
                           type="text"
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="w-full h-12 border border-gray-600 rounded-r-md border-l-0 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                          className="w-full h-12 border border-gray-600 rounded-r-md border-l-0 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           style={{
                             paddingLeft: '16px',
                             paddingRight: searchTerm ? '48px' : '16px'
                           }}
-                          placeholder="Search logs by target or tool..."
+                          placeholder="Search audit trail by cloud endpoint or tool..."
                         />
                       </div>
                     </div>
@@ -396,7 +395,7 @@ export default function ActivityLogs() {
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertCircle className="h-5 w-5 text-blue-700" />
+                      <AlertCircle className="h-5 w-5 text-red-400" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>
@@ -407,20 +406,20 @@ export default function ActivityLogs() {
                 {/* Logs List */}
                 <div className="bg-black shadow-xl rounded-xl p-6 mt-6 border border-gray-700">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-white">Recent Activity</h3>
+                    <h3 className="text-lg font-semibold text-white">Recent Cloud Activity</h3>
                     <div className="text-sm text-gray-400">
-                      Showing {Math.min(4, filteredLogs.length)} of {filteredLogs.length} logs
+                      Showing {Math.min(4, filteredLogs.length)} of {filteredLogs.length} audit entries
                     </div>
                   </div>
                   
                   {filteredLogs.length === 0 ? (
                     <div className="text-center py-12">
                       <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                      <h3 className="text-lg font-medium text-white mb-2">No logs found</h3>
+                      <h3 className="text-lg font-medium text-white mb-2">No audit entries found</h3>
                       <p className="text-gray-400">
                         {searchTerm || filter !== 'all' 
                           ? 'Try adjusting your search or filter criteria.'
-                          : 'Start using the tools to see your activity logs here.'
+                          : 'Start using the cloud security tools to see your audit trail here.'
                         }
                       </p>
                     </div>
@@ -439,7 +438,7 @@ export default function ActivityLogs() {
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center space-x-2 mb-2">
                                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getToolColor(log.tool)}`}>
-                                    {log.tool.toUpperCase()}
+                                    {log.tool === 'scan' ? 'INFRASTRUCTURE DISCOVERY' : 'SECURITY VALIDATION'}
                                   </span>
                                   <span className="text-gray-400 group-hover:text-gray-600 flex items-center text-sm">
                                     <Calendar className="h-3 w-3 mr-1" />
@@ -448,14 +447,14 @@ export default function ActivityLogs() {
                                 </div>
                                 <p className="text-white group-hover:text-black font-medium mb-2 break-words">{log.input_data}</p>
                                 
-                                {/* Quick result summary with red highlights and proper spacing */}
+                                {/* Quick result summary with blue highlights and proper spacing */}
                                 <div className="text-sm text-gray-300 group-hover:text-gray-700">
                                   {log.tool === 'scan' && log.result && (
                                     <div className="flex items-center flex-wrap" style={{ gap: '16px' }}>
-                                      <span>Target: <span style={{ color: '#ef4444', fontWeight: '600' }} className="group-hover:!text-red-600">{log.result.target}</span></span>
-                                      <span>Status: <span style={{ color: '#ef4444', fontWeight: '600' }} className="group-hover:!text-red-600">{log.result.status}</span></span>
+                                      <span>Target: <span className="text-blue-500 font-semibold group-hover:!text-blue-600">{log.result.target}</span></span>
+                                      <span>Status: <span className="text-blue-500 font-semibold group-hover:!text-blue-600">{log.result.status}</span></span>
                                       {log.result.ports && (
-                                        <span>Open Ports: <span style={{ color: '#ef4444', fontWeight: '600' }} className="group-hover:!text-red-600">
+                                        <span>Open Services: <span className="text-blue-500 font-semibold group-hover:!text-blue-600">
                                           {log.result.ports.filter((p: any) => p.state === 'open').length}
                                         </span></span>
                                       )}
@@ -463,17 +462,17 @@ export default function ActivityLogs() {
                                   )}
                                   {log.tool === 'payload' && log.result && (
                                     <div className="flex items-center flex-wrap" style={{ gap: '16px' }}>
-                                      <span>Type: <span style={{ color: '#ef4444', fontWeight: '600' }} className="group-hover:!text-red-600">{log.result.payload_type}</span></span>
+                                      <span>Type: <span className="text-blue-500 font-semibold group-hover:!text-blue-600">{log.result.test_type || log.result.payload_type}</span></span>
                                       <span className="flex items-center">
                                         Success: {log.result.success ? (
                                           <CheckCircle className="h-3 w-3 text-green-400 ml-1" />
                                         ) : (
-                                          <AlertCircle className="h-3 w-3 text-blue-700 ml-1" />
+                                          <AlertCircle className="h-3 w-3 text-red-400 ml-1" />
                                         )}
                                       </span>
                                       {log.result.response?.risk_level && (
                                         <span className={`px-2 py-1 text-xs rounded-full ${
-                                          log.result.response.risk_level === 'critical' ? 'bg-blue-700/10 text-blue-700' :
+                                          log.result.response.risk_level === 'critical' ? 'bg-red-400/10 text-red-400' :
                                           log.result.response.risk_level === 'high' ? 'bg-orange-400/10 text-orange-400' :
                                           log.result.response.risk_level === 'medium' ? 'bg-yellow-400/10 text-yellow-400' :
                                           'bg-green-400/10 text-green-400'
@@ -490,7 +489,7 @@ export default function ActivityLogs() {
                             <div className="flex items-center space-x-2 flex-shrink-0 ml-4">
                               <button
                                 onClick={() => toggleLogExpansion(log.id)}
-                                className="text-gray-400 hover:text-blue-700 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
+                                className="text-gray-400 hover:text-blue-400 group-hover:text-gray-600 group-hover:hover:text-blue-600 p-2 rounded-md transition-colors"
                                 title="Toggle details"
                               >
                                 {expandedLog === log.id ? (
@@ -501,8 +500,8 @@ export default function ActivityLogs() {
                               </button>
                               <button
                                 onClick={() => handleDeleteLog(log.id)}
-                                className="text-gray-400 hover:text-blue-700 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
-                                title="Delete log"
+                                className="text-gray-400 hover:text-red-400 group-hover:text-gray-600 group-hover:hover:text-red-600 p-2 rounded-md transition-colors"
+                                title="Delete audit entry"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </button>
@@ -528,10 +527,10 @@ export default function ActivityLogs() {
                   <div className="mt-6 text-center">
                     <button
                       onClick={fetchLogs}
-                      className="inline-flex items-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="inline-flex items-center px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     >
                       <FileText className="mr-2 h-4 w-4" />
-                      Load More Logs
+                      Load More Audit Entries
                     </button>
                   </div>
                 )}

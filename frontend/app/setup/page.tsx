@@ -9,7 +9,7 @@ import Sidebar from '@/components/Sidebar';
 import { 
   Settings, 
   Download, 
-  Server, 
+  Cloud, 
   Monitor, 
   Shield, 
   Terminal,
@@ -22,7 +22,7 @@ import {
   EyeOff
 } from 'lucide-react';
 
-export default function LabSetup() {
+export default function CloudEnvironmentSetup() {
   const [setupContent, setSetupContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -64,32 +64,32 @@ export default function LabSetup() {
 
   const tools = [
     {
-      name: 'Kali Linux',
-      description: 'Complete penetration testing distribution with pre-installed tools',
+      name: 'Docker Desktop',
+      description: 'Container platform for running cloud-native applications and microservices',
       icon: Terminal,
-      downloadUrl: 'https://www.kali.org/get-kali/',
-      category: 'Operating System'
+      downloadUrl: 'https://www.docker.com/products/docker-desktop/',
+      category: 'Container Platform'
     },
     {
-      name: 'Metasploitable 2',
-      description: 'Intentionally vulnerable Linux distribution for practice',
-      icon: Server,
-      downloadUrl: 'https://sourceforge.net/projects/metasploitable/',
-      category: 'Target System'
+      name: 'AWS CLI',
+      description: 'Command line interface for Amazon Web Services cloud management',
+      icon: Cloud,
+      downloadUrl: 'https://aws.amazon.com/cli/',
+      category: 'Cloud Platform'
     },
     {
-      name: 'DVWA',
-      description: 'Damn Vulnerable Web Application for web security testing',
+      name: 'Kubernetes (K8s)',
+      description: 'Container orchestration platform for cloud-native security testing',
       icon: Monitor,
-      downloadUrl: 'https://github.com/digininja/DVWA',
-      category: 'Web Application'
+      downloadUrl: 'https://kubernetes.io/docs/tasks/tools/',
+      category: 'Orchestration'
     },
     {
-      name: 'VirtualBox',
-      description: 'Free virtualization platform for running virtual machines',
+      name: 'Terraform',
+      description: 'Infrastructure as Code tool for provisioning cloud testing environments',
       icon: Shield,
-      downloadUrl: 'https://www.virtualbox.org/wiki/Downloads',
-      category: 'Virtualization'
+      downloadUrl: 'https://www.terraform.io/downloads',
+      category: 'IaC Tool'
     }
   ];
 
@@ -101,42 +101,42 @@ export default function LabSetup() {
       description: 'Update package lists and upgrade system packages'
     },
     {
-      id: 'nmap',
-      title: 'Install Nmap',
-      command: 'sudo apt install nmap -y',
-      description: 'Network discovery and security auditing tool'
+      id: 'awscli',
+      title: 'Install AWS CLI',
+      command: 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install',
+      description: 'AWS Command Line Interface for cloud service management'
     },
     {
-      id: 'nikto',
-      title: 'Install Nikto',
-      command: 'sudo apt install nikto -y',
-      description: 'Web server scanner for vulnerabilities'
+      id: 'kubectl',
+      title: 'Install Kubectl',
+      command: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl',
+      description: 'Kubernetes command-line tool for cluster management'
     },
     {
-      id: 'dirb',
-      title: 'Install Dirb',
-      command: 'sudo apt install dirb -y',
-      description: 'Web content scanner for hidden directories'
+      id: 'docker',
+      title: 'Install Docker',
+      command: 'curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh',
+      description: 'Container platform for cloud-native applications'
     },
     {
-      id: 'burpsuite',
-      title: 'Install Burp Suite',
-      command: 'sudo apt install burpsuite -y',
-      description: 'Web application security testing platform'
+      id: 'terraform',
+      title: 'Install Terraform',
+      command: 'wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && sudo apt install terraform -y',
+      description: 'Infrastructure as Code tool for cloud provisioning'
     },
     {
-      id: 'sqlmap',
-      title: 'Install SQLMap',
-      command: 'sudo apt install sqlmap -y',
-      description: 'Automatic SQL injection and database takeover tool'
+      id: 'cloudsec',
+      title: 'Install Cloud Security Tools',
+      command: 'pip3 install cloudsploit scout-suite prowler-cloud',
+      description: 'Cloud security assessment and compliance scanning tools'
     }
   ];
 
-  const networkConfig = {
-    attackerIP: '192.168.100.10',
-    targetIP: '192.168.100.20',
-    gateway: '192.168.100.1',
-    subnet: '192.168.100.0/24'
+  const cloudConfig = {
+    region: 'us-east-1',
+    vpc: '10.0.0.0/16',
+    publicSubnet: '10.0.1.0/24',
+    privateSubnet: '10.0.2.0/24'
   };
 
   if (isLoading) {
@@ -147,7 +147,7 @@ export default function LabSetup() {
           <Sidebar />
           <div className="md:pl-64 flex flex-col flex-1">
             <main className="flex-1 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
             </main>
           </div>
         </div>
@@ -167,18 +167,18 @@ export default function LabSetup() {
                 {/* Header */}
                 <div className="mb-8">
                   <div className="flex items-center space-x-3">
-                    <Settings className="h-8 w-8 text-red-500" />
-                    <h1 className="text-2xl font-semibold text-white">Lab Setup Guide</h1>
+                    <Settings className="h-8 w-8 text-blue-500" />
+                    <h1 className="text-2xl font-semibold text-white">Cloud Environment Setup Guide</h1>
                   </div>
                   <p className="mt-1 text-sm text-gray-400">
-                    Complete guide for setting up your penetration testing laboratory
+                    Complete guide for configuring your cloud security testing environment
                   </p>
                 </div>
 
                 {error && (
                   <div className="bg-red-900/50 border border-red-500 rounded-md p-4 mb-8">
                     <div className="flex">
-                      <AlertTriangle className="h-5 w-5 text-blue-700" />
+                      <AlertTriangle className="h-5 w-5 text-red-400" />
                       <div className="ml-3">
                         <p className="text-sm text-red-300">{error}</p>
                       </div>
@@ -187,17 +187,17 @@ export default function LabSetup() {
                 )}
 
                 {/* Safety Warning */}
-                <div className="bg-yellow-900/30 border border-yellow-500/30 rounded-lg p-6 mb-8">
+                <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-6 mb-8">
                   <div className="flex">
-                    <AlertTriangle className="h-6 w-6 text-yellow-400 mt-1" />
+                    <AlertTriangle className="h-6 w-6 text-blue-400 mt-1" />
                     <div className="ml-4">
-                      <h3 className="text-lg font-medium text-yellow-300 mb-2">⚠️ Legal & Safety Notice</h3>
-                      <div className="text-yellow-200 space-y-2">
-                        <p>• Only test on systems you own or have explicit written permission to test</p>
-                        <p>• Use isolated networks to prevent accidental damage to production systems</p>
-                        <p>• Follow responsible disclosure practices for any vulnerabilities found</p>
-                        <p>• Keep detailed logs of all testing activities</p>
-                        <p>• Ensure compliance with local laws and regulations</p>
+                      <h3 className="text-lg font-medium text-blue-300 mb-2">Cloud Security & Compliance Notice</h3>
+                      <div className="text-blue-200 space-y-2">
+                        <p>• Only test on cloud resources you own or have explicit written permission to assess</p>
+                        <p>• Use isolated cloud environments to prevent impact on production workloads</p>
+                        <p>• Follow cloud provider terms of service and responsible disclosure practices</p>
+                        <p>• Maintain detailed audit logs of all cloud security testing activities</p>
+                        <p>• Ensure compliance with data protection regulations and cloud governance policies</p>
                       </div>
                     </div>
                   </div>
@@ -208,46 +208,46 @@ export default function LabSetup() {
                   <h2 className="text-xl font-semibold text-white mb-6">Quick Start Steps</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="text-center">
-                      <div className="bg-red-600 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                      <div className="bg-blue-700 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                         <span className="text-white font-bold">1</span>
                       </div>
-                      <h3 className="text-white font-medium mb-2">Download Tools</h3>
-                      <p className="text-sm text-gray-400">Get VirtualBox, Kali Linux, and target systems</p>
+                      <h3 className="text-white font-medium mb-2">Setup Cloud Tools</h3>
+                      <p className="text-sm text-gray-400">Install Docker, AWS CLI, and cloud security tools</p>
                     </div>
                     <div className="text-center">
-                      <div className="bg-red-600 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                      <div className="bg-blue-700 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                         <span className="text-white font-bold">2</span>
                       </div>
-                      <h3 className="text-white font-medium mb-2">Setup Network</h3>
-                      <p className="text-sm text-gray-400">Configure isolated virtual network</p>
+                      <h3 className="text-white font-medium mb-2">Configure Cloud Access</h3>
+                      <p className="text-sm text-gray-400">Set up cloud provider credentials and access</p>
                     </div>
                     <div className="text-center">
-                      <div className="bg-red-600 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                      <div className="bg-blue-700 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                         <span className="text-white font-bold">3</span>
                       </div>
-                      <h3 className="text-white font-medium mb-2">Install Tools</h3>
-                      <p className="text-sm text-gray-400">Set up penetration testing tools</p>
+                      <h3 className="text-white font-medium mb-2">Deploy Test Environment</h3>
+                      <p className="text-sm text-gray-400">Provision isolated cloud testing infrastructure</p>
                     </div>
                     <div className="text-center">
-                      <div className="bg-red-600 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                      <div className="bg-blue-700 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                         <span className="text-white font-bold">4</span>
                       </div>
-                      <h3 className="text-white font-medium mb-2">Start Testing</h3>
-                      <p className="text-sm text-gray-400">Begin your security assessments</p>
+                      <h3 className="text-white font-medium mb-2">Begin Assessment</h3>
+                      <p className="text-sm text-gray-400">Start your cloud security assessments</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Required Tools */}
                 <div className="bg-gray-800 shadow rounded-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold text-white mb-6">Required Tools & Software</h2>
+                  <h2 className="text-xl font-semibold text-white mb-6">Required Cloud Tools & Software</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {tools.map((tool) => (
                       <div key={tool.name} className="bg-gray-700 rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex items-start space-x-3">
-                            <div className="bg-red-600/20 p-2 rounded-lg">
-                              <tool.icon className="h-6 w-6 text-blue-700" />
+                            <div className="bg-blue-700/20 p-2 rounded-lg">
+                              <tool.icon className="h-6 w-6 text-blue-400" />
                             </div>
                             <div>
                               <h3 className="text-white font-medium">{tool.name}</h3>
@@ -261,7 +261,7 @@ export default function LabSetup() {
                             href={tool.downloadUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center px-3 py-1 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
+                            className="flex items-center px-3 py-1 text-sm bg-blue-700 hover:bg-blue-800 text-white rounded-md transition-colors"
                           >
                             <Download className="h-4 w-4 mr-1" />
                             Download
@@ -272,10 +272,10 @@ export default function LabSetup() {
                   </div>
                 </div>
 
-                {/* Network Configuration */}
+                {/* Cloud Configuration */}
                 <div className="bg-gray-800 shadow rounded-lg p-6 mb-8">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-semibold text-white">Network Configuration</h2>
+                    <h2 className="text-xl font-semibold text-white">Cloud Network Configuration</h2>
                     <button
                       onClick={() => setShowSensitiveInfo(!showSensitiveInfo)}
                       className="flex items-center px-3 py-1 text-sm bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-md transition-colors"
@@ -297,20 +297,20 @@ export default function LabSetup() {
                   {showSensitiveInfo && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <div className="bg-gray-700 rounded-lg p-4">
-                        <p className="text-xs text-gray-400 mb-1">Network Range</p>
-                        <p className="text-white font-mono">{networkConfig.subnet}</p>
+                        <p className="text-xs text-gray-400 mb-1">AWS Region</p>
+                        <p className="text-white font-mono">{cloudConfig.region}</p>
                       </div>
                       <div className="bg-gray-700 rounded-lg p-4">
-                        <p className="text-xs text-gray-400 mb-1">Gateway</p>
-                        <p className="text-white font-mono">{networkConfig.gateway}</p>
+                        <p className="text-xs text-gray-400 mb-1">VPC CIDR</p>
+                        <p className="text-white font-mono">{cloudConfig.vpc}</p>
                       </div>
                       <div className="bg-gray-700 rounded-lg p-4">
-                        <p className="text-xs text-gray-400 mb-1">Attacker IP</p>
-                        <p className="text-white font-mono">{networkConfig.attackerIP}</p>
+                        <p className="text-xs text-gray-400 mb-1">Public Subnet</p>
+                        <p className="text-white font-mono">{cloudConfig.publicSubnet}</p>
                       </div>
                       <div className="bg-gray-700 rounded-lg p-4">
-                        <p className="text-xs text-gray-400 mb-1">Target IP</p>
-                        <p className="text-white font-mono">{networkConfig.targetIP}</p>
+                        <p className="text-xs text-gray-400 mb-1">Private Subnet</p>
+                        <p className="text-white font-mono">{cloudConfig.privateSubnet}</p>
                       </div>
                     </div>
                   )}
@@ -353,7 +353,7 @@ export default function LabSetup() {
                 {/* Setup Guide Content */}
                 <div className="bg-gray-800 shadow rounded-lg p-6">
                   <div className="flex items-center space-x-2 mb-6">
-                    <BookOpen className="h-6 w-6 text-red-500" />
+                    <BookOpen className="h-6 w-6 text-blue-500" />
                     <h2 className="text-xl font-semibold text-white">Detailed Setup Guide</h2>
                   </div>
                   <div className="prose prose-invert max-w-none">
@@ -365,30 +365,30 @@ export default function LabSetup() {
 
                 {/* Additional Resources */}
                 <div className="bg-gray-800 shadow rounded-lg p-6 mt-8">
-                  <h2 className="text-xl font-semibold text-white mb-6">Additional Resources</h2>
+                  <h2 className="text-xl font-semibold text-white mb-6">Additional Cloud Security Resources</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <a
-                      href="https://www.offensive-security.com/metasploit-unleashed/"
+                      href="https://aws.amazon.com/security/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                     >
-                      <ExternalLink className="h-5 w-5 text-blue-700 mr-3" />
+                      <ExternalLink className="h-5 w-5 text-blue-400 mr-3" />
                       <div>
-                        <h3 className="text-white font-medium">Metasploit Unleashed</h3>
-                        <p className="text-sm text-gray-400">Free Metasploit course</p>
+                        <h3 className="text-white font-medium">AWS Security Hub</h3>
+                        <p className="text-sm text-gray-400">AWS cloud security best practices</p>
                       </div>
                     </a>
                     <a
-                      href="https://owasp.org/www-project-webgoat/"
+                      href="https://owasp.org/www-project-cloud-security/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                     >
-                      <ExternalLink className="h-5 w-5 text-blue-700 mr-3" />
+                      <ExternalLink className="h-5 w-5 text-blue-400 mr-3" />
                       <div>
-                        <h3 className="text-white font-medium">OWASP WebGoat</h3>
-                        <p className="text-sm text-gray-400">Vulnerable web application</p>
+                        <h3 className="text-white font-medium">OWASP Cloud Security</h3>
+                        <p className="text-sm text-gray-400">Cloud security testing methodology</p>
                       </div>
                     </a>
                   </div>

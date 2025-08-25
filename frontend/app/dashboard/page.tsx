@@ -17,7 +17,8 @@ import {
   TrendingUp,
   Users,
   Clock,
-  AlertTriangle
+  AlertTriangle,
+  Cloud
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -79,40 +80,40 @@ export default function Dashboard() {
 
   const tools = [
     {
-      title: 'Network Scan',
-      description: 'Perform comprehensive network reconnaissance and port scanning',
-      icon: Search,
+      title: 'Cloud Infrastructure Discovery',
+      description: 'Discover and map cloud resources, services, and configurations',
+      icon: Cloud,
       href: '/scan',
       color: 'red' as const,
       gradient: 'from-red-500 to-red-600'
     },
     {
-      title: 'Payload Testing',
-      description: 'Test various attack payloads including XSS, SQLi, CSRF and more',
+      title: 'Cloud Security Validation',
+      description: 'Test cloud misconfigurations, API vulnerabilities, IAM issues and more',
       icon: Zap,
       href: '/payload',
       color: 'blue' as const,
       gradient: 'from-blue-500 to-blue-600'
     },
     {
-      title: 'Activity Logs',
-      description: 'View and manage your penetration testing activity logs',
+      title: 'Cloud Audit Trail',
+      description: 'View and manage your cloud security assessment activities',
       icon: FileText,
       href: '/logs',
       color: 'green' as const,
       gradient: 'from-green-500 to-green-600'
     },
     {
-      title: 'CVE Database',
-      description: 'Access up-to-date vulnerability information and exploits',
+      title: 'Cloud Threat Intelligence',
+      description: 'Access up-to-date cloud-specific threats and security advisories',
       icon: Database,
       href: '/cves',
       color: 'purple' as const,
       gradient: 'from-purple-500 to-purple-600'
     },
     {
-      title: 'Lab Setup',
-      description: 'Get guidance on setting up your penetration testing lab',
+      title: 'Cloud Environment Setup',
+      description: 'Get guidance on configuring your cloud security testing environment',
       icon: Settings,
       href: '/setup',
       color: 'yellow' as const,
@@ -122,16 +123,16 @@ export default function Dashboard() {
 
   const stats = [
     {
-      name: 'Total Scans',
+      name: 'Cloud Assets Scanned',
       value: '24',
-      icon: Search,
+      icon: Cloud,
       change: '+12%',
       changeType: 'increase',
       color: 'red',
       bgGradient: 'from-red-500/20 to-red-600/10'
     },
     {
-      name: 'Payloads Tested',
+      name: 'Security Tests Executed',
       value: '156',
       icon: Zap,
       change: '+8%',
@@ -140,7 +141,7 @@ export default function Dashboard() {
       bgGradient: 'from-blue-500/20 to-blue-600/10'
     },
     {
-      name: 'Vulnerabilities Found',
+      name: 'Cloud Risks Identified',
       value: '18',
       icon: AlertTriangle,
       change: '+3%',
@@ -149,7 +150,7 @@ export default function Dashboard() {
       bgGradient: 'from-orange-500/20 to-orange-600/10'
     },
     {
-      name: 'Success Rate',
+      name: 'Detection Rate',
       value: '73%',
       icon: TrendingUp,
       change: '+5%',
@@ -162,16 +163,16 @@ export default function Dashboard() {
   const recentActivities = [
     {
       id: 1,
-      action: 'Performed network scan on',
-      target: '192.168.1.1',
-      icon: Search,
+      action: 'Scanned AWS EC2 instances in',
+      target: 'us-east-1',
+      icon: Cloud,
       time: '2 hours ago',
       status: 'completed',
       color: 'red'
     },
     {
       id: 2,
-      action: 'Tested XSS payload on',
+      action: 'Validated S3 bucket permissions on',
       target: 'example.com',
       icon: Zap,
       time: '4 hours ago',
@@ -180,8 +181,8 @@ export default function Dashboard() {
     },
     {
       id: 3,
-      action: 'Searched CVE database for',
-      target: 'Apache vulnerabilities',
+      action: 'Reviewed threat intel for',
+      target: 'containerized workloads',
       icon: Database,
       time: '1 day ago',
       status: 'completed',
@@ -191,7 +192,7 @@ export default function Dashboard() {
 
   const getStatColor = (color: string) => {
     const colors = {
-      red: 'text-blue-700',
+      red: 'text-red-400',
       blue: 'text-blue-400',
       orange: 'text-orange-400',
       green: 'text-green-400'
@@ -222,7 +223,7 @@ export default function Dashboard() {
                 <div className="mb-6">
                   <div className="flex items-center justify-center space-x-3 mb-2">
                     <Shield className="h-7 w-7" style={{ color: '#dc2626', filter: 'drop-shadow(0 0 10px #dc2626)' }} />
-                    <h1 className="text-2xl font-bold" style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}>Security Dashboard</h1>
+                    <h1 className="text-2xl font-bold" style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}>Cloud Security Dashboard</h1>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Users className="h-4 w-4 text-gray-400" />

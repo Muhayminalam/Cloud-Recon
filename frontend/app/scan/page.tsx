@@ -6,7 +6,7 @@ import { auth } from '@/lib/auth';
 import { apiClient } from '@/lib/api';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
-import { Search, Globe, Shield, Clock, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { Cloud, Globe, Shield, Clock, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 
 interface ScanResult {
   target: string;
@@ -33,7 +33,7 @@ interface ScanResult {
   latency: string;
 }
 
-export default function NetworkScan() {
+export default function CloudInfrastructureDiscovery() {
   const [target, setTarget] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
@@ -63,7 +63,7 @@ export default function NetworkScan() {
     
     // Validation check
     if (!target.trim()) {
-      setValidationError('Please enter a target IP address or hostname');
+      setValidationError('Please enter a target cloud endpoint or hostname');
       setError('');
       return;
     }
@@ -81,7 +81,7 @@ export default function NetworkScan() {
       // Save scan result to localStorage
       localStorage.setItem('lastScanResult', JSON.stringify(result));
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Scan failed. Please try again.');
+      setError(err.response?.data?.detail || 'Discovery failed. Please try again.');
     } finally {
       setIsScanning(false);
     }
@@ -98,7 +98,7 @@ export default function NetworkScan() {
       case 'open':
         return 'text-green-400 bg-green-400/10';
       case 'closed':
-        return 'text-blue-700 bg-blue-700/10';
+        return 'text-red-400 bg-red-400/10';
       case 'filtered':
         return 'text-yellow-400 bg-yellow-400/10';
       default:
@@ -118,60 +118,60 @@ export default function NetworkScan() {
                 {/* Header */}
                 <div className="mb-8 text-center">
                   <div className="flex items-center justify-center space-x-3 mb-4">
-                    <Search 
-                      className="h-8 w-8" 
-                      style={{ color: '#dc2626', filter: 'drop-shadow(0 0 10px #dc2626)' }} 
+                    <Cloud 
+                      className="h-8 w-8 text-blue-500" 
+                      style={{ filter: 'drop-shadow(0 0 10px #3b82f6)' }} 
                     />
                     <h1 
-                      className="text-3xl font-bold" 
-                      style={{ color: '#dc2626', textShadow: '0 0 10px #dc2626' }}
+                      className="text-3xl font-bold text-blue-500" 
+                      style={{ textShadow: '0 0 10px #3b82f6' }}
                     >
-                      Network Scanner
+                      Cloud Infrastructure Discovery
                     </h1>
                   </div>
                   <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-                    Perform comprehensive network reconnaissance and port scanning to discover open services, 
-                    identify operating systems, and map network infrastructure for security assessment.
+                    Discover and map cloud resources, services, and configurations to identify 
+                    exposed endpoints, analyze cloud architectures, and assess security postures.
                   </p>
                 </div>
 
                 {/* How to Use Section */}
-                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/30 rounded-xl p-6">
+                <div className="mb-10 bg-gradient-to-br from-blue-900/20 to-blue-700/10 border border-blue-500/30 rounded-xl p-6">
                   <div className="flex items-center space-x-3 mb-4">
                     <Shield className="h-6 w-6 text-blue-400" />
-                    <h2 className="text-xl font-bold text-blue-300">How to Use Network Scanner</h2>
+                    <h2 className="text-xl font-bold text-blue-300">How to Use Cloud Infrastructure Discovery</h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-100">
                     <div>
-                      <h3 className="font-semibold text-blue-200 mb-2">📍 Target Input:</h3>
+                      <h3 className="font-semibold text-blue-200 mb-2">Target Input:</h3>
                       <ul className="space-y-1 text-sm">
-                        <li>• Enter an IP address (e.g., 192.168.1.1)</li>
-                        <li>• Or use a hostname (e.g., example.com)</li>
-                        <li>• Single targets only for focused scanning</li>
+                        <li>• Enter a cloud service endpoint (e.g., api.example.com)</li>
+                        <li>• Use public cloud IPs or domain names</li>
+                        <li>• Target specific cloud infrastructure components</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-blue-200 mb-2">🔍 What It Does:</h3>
+                      <h3 className="font-semibold text-blue-200 mb-2">What It Discovers:</h3>
                       <ul className="space-y-1 text-sm">
-                        <li>• Discovers open/closed/filtered ports</li>
-                        <li>• Identifies running services and versions</li>
-                        <li>• Detects operating system information</li>
+                        <li>• Cloud service ports and endpoints</li>
+                        <li>• Running cloud services and APIs</li>
+                        <li>• Cloud platform and configuration details</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-blue-200 mb-2">⚠️ Legal Notice:</h3>
+                      <h3 className="font-semibold text-blue-200 mb-2">Legal Notice:</h3>
                       <ul className="space-y-1 text-sm">
-                        <li>• Only scan systems you own</li>
+                        <li>• Only scan cloud resources you own</li>
                         <li>• Get explicit permission first</li>
-                        <li>• Follow responsible disclosure</li>
+                        <li>• Follow cloud provider terms of service</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-blue-200 mb-2">📊 Results Include:</h3>
+                      <h3 className="font-semibold text-blue-200 mb-2">Results Include:</h3>
                       <ul className="space-y-1 text-sm">
-                        <li>• Port status and service details</li>
-                        <li>• OS fingerprinting results</li>
-                        <li>• Response times and host status</li>
+                        <li>• Service endpoints and API exposure</li>
+                        <li>• Cloud platform identification</li>
+                        <li>• Response patterns and configurations</li>
                       </ul>
                     </div>
                   </div>
@@ -182,15 +182,15 @@ export default function NetworkScan() {
                   <div className="flex flex-col items-center space-y-0">
                     <div style={{ marginBottom: '20px' }}>
                       <label htmlFor="target" className="block text-2xl font-bold text-white text-center" style={{ marginBottom: '16px' }}>
-                        Target (IP Address or Hostname)
+                        Target (Cloud Endpoint or Hostname)
                       </label>
                       <div 
-                        className="relative rounded-xl bg-gray-700 focus-within:ring-2 focus-within:ring-red-500 transition-all duration-300"
+                        className="relative rounded-xl bg-gray-700 focus-within:ring-2 focus-within:ring-blue-500 transition-all duration-300"
                         style={{ 
                           width: '320px',
                           height: '60px',
                           margin: '0 auto',
-                          border: '2px solid #4b5563'
+                          border: '2px solid #374151'
                         }}
                       >
                         <div 
@@ -242,7 +242,7 @@ export default function NetworkScan() {
                             border: 'none',
                             backgroundColor: 'transparent'
                           }}
-                          placeholder="192.168.1.1 or example.com"
+                          placeholder="api.example.com or cloud endpoint"
                         />
                       </div>
                     </div>
@@ -273,7 +273,7 @@ export default function NetworkScan() {
                         }}
                       >
                         <div className="flex items-center">
-                          <AlertCircle className="h-5 w-5 text-blue-700 mr-3" />
+                          <AlertCircle className="h-5 w-5 text-red-400 mr-3" />
                           <p className="text-sm text-red-300">{error}</p>
                         </div>
                       </div>
@@ -284,31 +284,23 @@ export default function NetworkScan() {
                         type="submit"
                         disabled={isScanning}
                         onClick={handleScan}
-                        className="inline-flex items-center justify-center font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center justify-center font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed bg-blue-700 hover:bg-blue-800 text-white"
                         style={{ 
-                          backgroundColor: '#dc2626',
-                          color: 'white',
                           border: 'none',
                           padding: '16px 32px',
                           fontSize: '18px',
                           minWidth: '192px'
                         }}
-                        onMouseEnter={(e) => {
-                          if (!isScanning) e.currentTarget.style.backgroundColor = '#b91c1c';
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isScanning) e.currentTarget.style.backgroundColor = '#dc2626';
-                        }}
                       >
                         {isScanning ? (
                           <>
                             <Loader className="animate-spin -ml-1 mr-3 h-6 w-6" />
-                            Scanning...
+                            Discovering...
                           </>
                         ) : (
                           <>
-                            <Search className="-ml-1 mr-3 h-6 w-6" />
-                            Start Scan
+                            <Cloud className="-ml-1 mr-3 h-6 w-6" />
+                            Start Discovery
                           </>
                         )}
                       </button>
@@ -322,7 +314,7 @@ export default function NetworkScan() {
                     {/* Scan Summary */}
                     <div className="bg-gray-800 shadow-xl rounded-xl p-6">
                       <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold text-white">Scan Summary</h2>
+                        <h2 className="text-2xl font-bold text-white">Discovery Summary</h2>
                         <div className="flex items-center space-x-2">
                           <CheckCircle className="h-6 w-6 text-green-400" />
                           <span className="text-green-400 font-semibold">
@@ -364,9 +356,9 @@ export default function NetworkScan() {
                         
                         <div className="bg-gray-700 rounded-xl p-4">
                           <div className="flex items-center">
-                            <Search className="h-6 w-6 text-gray-400 mr-3" />
+                            <Cloud className="h-6 w-6 text-gray-400 mr-3" />
                             <div>
-                              <p className="text-sm text-gray-400">Open Ports</p>
+                              <p className="text-sm text-gray-400">Open Services</p>
                               <p className="font-semibold text-white">
                                 {scanResult.ports.filter(p => p.state === 'open').length}
                               </p>
@@ -376,9 +368,9 @@ export default function NetworkScan() {
                       </div>
                     </div>
 
-                    {/* OS Information */}
+                    {/* Platform Information */}
                     <div className="bg-gray-800 shadow-xl rounded-xl p-6">
-                      <h2 className="text-2xl font-bold text-white mb-6">Operating System</h2>
+                      <h2 className="text-2xl font-bold text-white mb-6">Platform Information</h2>
                       <div className="bg-gray-700 rounded-xl p-6">
                         <div className="flex justify-between items-center">
                           <div>
@@ -387,15 +379,15 @@ export default function NetworkScan() {
                           </div>
                           <div className="text-right">
                             <p className="text-2xl font-bold text-green-400">{scanResult.os_info.accuracy}</p>
-                            <p className="text-gray-400 text-sm">Accuracy</p>
+                            <p className="text-gray-400 text-sm">Confidence</p>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Port Scan Results */}
+                    {/* Service Discovery Results */}
                     <div className="bg-gray-800 shadow-xl rounded-xl p-6">
-                      <h2 className="text-2xl font-bold text-white mb-6">Port Scan Results</h2>
+                      <h2 className="text-2xl font-bold text-white mb-6">Service Discovery Results</h2>
                       <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-700">
                           <thead>
@@ -438,10 +430,10 @@ export default function NetworkScan() {
                       </div>
                     </div>
 
-                    {/* Services */}
+                    {/* Cloud Services */}
                     {scanResult.services.length > 0 && (
                       <div className="bg-gray-800 shadow-xl rounded-xl p-6">
-                        <h2 className="text-2xl font-bold text-white mb-6">Detected Services</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">Detected Cloud Services</h2>
                         <div className="space-y-4">
                           {scanResult.services.map((service, index) => (
                             <div key={index} className="bg-gray-700 rounded-xl p-4">
