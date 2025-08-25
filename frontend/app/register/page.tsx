@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
-  Shield,
+  Cloud,
   Mail,
   Lock,
   AlertCircle,
@@ -78,20 +78,20 @@ export default function Register() {
         {/* Header */}
         <div className="flex flex-col items-center text-center" style={{marginBottom: '24px'}}>
           <div className="mb-6">
-            <Shield className="h-12 w-12" style={{color: '#ef4444'}} />
+            <Cloud className="h-12 w-12 text-blue-500" style={{ filter: 'drop-shadow(0 0 10px #3b82f6)' }} />
           </div>
-          <h2 className="text-3xl font-extrabold text-white">Create your account</h2>
+          <h2 className="text-3xl font-extrabold text-white">Create your cloud security account</h2>
         </div>
 
         {/* Form */}
         <div className="flex flex-col items-center w-full px-4">
           {error && (
-            <div className="p-4 w-full max-w-[550px] mb-12 border border-red-600 rounded-lg bg-red-600/10">
+            <div className="p-4 w-full max-w-[550px] mb-12 border border-blue-600 rounded-lg bg-blue-600/10">
               <div className="flex items-start">
-                <AlertCircle className="h-5 w-5 text-blue-700 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div className="ml-3">
-                  <h3 className="text-blue-700 font-semibold mb-1">Registration Error</h3>
-                  <p className="text-red-300">{error}</p>
+                  <h3 className="text-blue-400 font-semibold mb-1">Registration Error</h3>
+                  <p className="text-blue-300">{error}</p>
                 </div>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function Register() {
                 name="email"
                 placeholder="Enter your email"
                 required
-                className="w-full rounded-md text-base border bg-red-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#dc2626] focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="w-full rounded-md text-base border bg-blue-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                 style={{
                   paddingTop: '14px',
                   paddingBottom: '14px',
@@ -151,7 +151,7 @@ export default function Register() {
                 name="password"
                 placeholder="Enter your password"
                 required
-                className="w-full rounded-md text-base border bg-red-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#dc2626] focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="w-full rounded-md text-base border bg-blue-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                 style={{
                   paddingTop: '14px',
                   paddingBottom: '14px',
@@ -172,9 +172,9 @@ export default function Register() {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 )}
               </button>
             </div>
@@ -196,7 +196,7 @@ export default function Register() {
                 name="confirmPassword"
                 placeholder="Confirm your password"
                 required
-                className="w-full rounded-md text-base border bg-red-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#dc2626] focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="w-full rounded-md text-base border bg-blue-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                 style={{
                   paddingTop: '14px',
                   paddingBottom: '14px',
@@ -217,9 +217,9 @@ export default function Register() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 )}
               </button>
             </div>
@@ -229,12 +229,12 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-primary w-[280px] py-4 text-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 px-8 rounded-md w-[280px] text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-auto" />
                 ) : (
-                  'Create Account'
+                  'Create Cloud Account'
                 )}
               </button>
             </div>
@@ -245,7 +245,7 @@ export default function Register() {
                 Already have an account?{' '}
                 <Link 
                   href="/login" 
-                  className="text-red-500 hover:text-blue-700 font-semibold underline underline-offset-2 transition-colors duration-200"
+                  className="text-blue-500 hover:text-blue-400 font-semibold underline underline-offset-2 transition-colors duration-200"
                 >
                   Sign in here
                 </Link>

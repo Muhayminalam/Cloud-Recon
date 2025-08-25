@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
-import { Shield, Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Cloud, Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -35,22 +35,22 @@ export default function Login() {
         {/* Header */}
         <div className="flex flex-col items-center text-center" style={{marginBottom: '24px'}}>
           <div style={{marginBottom: '24px'}}>
-            <Shield className="h-200 w-200" style={{color: '#ef4444'}} />
+            <Cloud className="h-16 w-16 text-blue-500" style={{ filter: 'drop-shadow(0 0 10px #3b82f6)' }} />
           </div>
           <h2 className="text-4xl font-extrabold text-white" style={{marginBottom: '16px'}}>
-            Sign in to RedRecon
+            Sign in to Cloud Recon
           </h2>
         </div>
 
         {/* Form */}
         <div className="flex flex-col items-center w-full px-4">
           {error && (
-            <div className="p-4 w-full max-w-[550px]" style={{marginBottom: '24px', border: '1px solid #dc2626', borderRadius: '8px', backgroundColor: 'rgba(220, 38, 38, 0.1)'}}>
+            <div className="p-4 w-full max-w-[550px]" style={{marginBottom: '24px', border: '1px solid #1d4ed8', borderRadius: '8px', backgroundColor: 'rgba(29, 78, 216, 0.1)'}}>
               <div className="flex items-start">
-                <AlertCircle className="h-5 w-5 text-blue-700 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div className="ml-3">
-                  <h3 className="text-blue-700 font-semibold mb-1">Login Error</h3>
-                  <p className="text-red-300">{error}</p>
+                  <h3 className="text-blue-400 font-semibold mb-1">Login Error</h3>
+                  <p className="text-blue-300">{error}</p>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function Login() {
                 name="email"
                 placeholder="Enter your email"
                 required
-                className="w-full rounded-md text-base border bg-red-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#dc2626] focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="w-full rounded-md text-base border bg-blue-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                 style={{
                   paddingTop: '14px',
                   paddingBottom: '14px',
@@ -103,7 +103,7 @@ export default function Login() {
                 name="password"
                 placeholder="Enter your password"
                 required
-                className="w-full rounded-md text-base border bg-red-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#dc2626] focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="w-full rounded-md text-base border bg-blue-950/40 border-[#333] text-white placeholder-gray-400 shadow-[0_0_10px_#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                 style={{
                   paddingTop: '14px',
                   paddingBottom: '14px',
@@ -124,9 +124,9 @@ export default function Login() {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-700 transition-colors" />
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-blue-400 transition-colors" />
                 )}
               </button>
             </div>
@@ -136,7 +136,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-primary w-[280px] py-4 text-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 px-8 rounded-md w-[280px] text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-auto" />
@@ -152,7 +152,7 @@ export default function Login() {
                 Don't have an account?{' '}
                 <Link 
                   href="/register" 
-                  className="text-red-500 hover:text-blue-700 font-semibold underline underline-offset-2 transition-colors duration-200"
+                  className="text-blue-500 hover:text-blue-400 font-semibold underline underline-offset-2 transition-colors duration-200"
                 >
                   Sign up here
                 </Link>
