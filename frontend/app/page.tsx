@@ -25,23 +25,23 @@ export default function Home() {
   const features = [
     {
       icon: Search,
-      title: 'Network Scanning',
-      description: 'Perform comprehensive network reconnaissance and port scanning'
+      title: 'Cloud Infrastructure Discovery',
+      description: 'Perform comprehensive cloud asset discovery and network reconnaissance'
     },
     {
       icon: Zap,
-      title: 'Payload Testing',
-      description: 'Test various attack payloads including XSS, SQLi, and more'
+      title: ' Cloud Security Validation',
+      description: 'Test various attack vectors including cloud misconfigurations, API vulnerabilities, and more'
     },
     {
       icon: FileText,
-      title: 'Activity Logging',
-      description: 'Track and analyze all penetration testing activities'
+      title: 'Cloud Audit Trail',
+      description: 'Track and analyze all cloud security testing activities and compliance events'
     },
     {
       icon: Database,
-      title: 'CVE Database',
-      description: 'Access up-to-date vulnerability information and exploits'
+      title: 'Cloud Threat Intelligence',
+      description: 'Access up-to-date cloud-specific vulnerability information and threat indicators'
     }
   ];
 
