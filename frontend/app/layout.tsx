@@ -6,8 +6,8 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RedRecon - Red Team Simulation Platform',
-  description: 'Secure red team simulation and penetration testing platform',
+  title: 'CloudRecon - Cloud Security Simulation Platform',
+  description: 'Cloud security assessment and posture management platform for learning secure configurations and defenses',
   icons: {
     icon: [
       { url: '/favicon.ico' },
