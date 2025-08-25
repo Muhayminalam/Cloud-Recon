@@ -106,7 +106,7 @@ Practice identifying misconfigurations and strengthening defenses in a safe, con
               Comprehensive Security Testing
             </h3>
             <p className="mb-20 text-xl max-w-3xl mx-auto leading-relaxed" style={{ color: 'white' }}>
-              Everything you need for professional penetration testing and security assessments.
+              Everything you need for professional cloud security assessments and posture management.
             </p>
           </div>
 
